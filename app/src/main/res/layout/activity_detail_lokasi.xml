@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".detaillokasi.DetailLokasiActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar_detail_lokasi"
+        android:layout_width="match_parent"
+        android:layout_height="250dp">
+
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:scrimAnimationDuration="300"
+            app:contentScrim="@android:color/white"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+            <RelativeLayout
+                android:id="@+id/layout_image_slider"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <androidx.viewpager.widget.ViewPager
+                    android:id="@+id/pager_detail_lokasi"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                </androidx.viewpager.widget.ViewPager>
+
+                <com.viewpagerindicator.CirclePageIndicator
+                    android:padding="8dp"
+                    android:layout_centerHorizontal="true"
+                    android:id="@+id/pageindicator_image_lokasi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"/>
+
+            </RelativeLayout>
+
+            <androidx.appcompat.widget.Toolbar
+                app:layout_collapseMode="pin"
+                android:id="@+id/toolbar_detail_lokasi"
+                android:layout_width="match_parent"
+                android:layout_height="?android:attr/actionBarSize">
+
+            </androidx.appcompat.widget.Toolbar>
+
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_marginStart="@dimen/enambelas"
+                android:layout_marginTop="@dimen/enambelas"
+                android:layout_marginEnd="@dimen/enambelas"
+                android:maxLines="1"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/nama_lokasi"/>
+
+            <TextView
+                android:layout_marginStart="@dimen/enambelas"
+                android:layout_marginEnd="@dimen/enambelas"
+                android:maxLines="1"
+                android:textSize="12sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/alamat_lokasi"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/delapan"/>
+
+            <LinearLayout
+                android:layout_marginStart="@dimen/enambelas"
+                android:layout_marginEnd="@dimen/enambelas"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.appcompat.widget.AppCompatRatingBar
+                    android:clickable="false"
+                    android:numStars="5"
+                    style="@style/Widget.AppCompat.RatingBar.Small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:layout_marginStart="@dimen/delapan"
+                    android:textSize="12sp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/score_rating"/>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="16dp"/>
+
+            <com.borjabravo.readmoretextview.ReadMoreTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/enambelas"
+                android:layout_marginEnd="@dimen/enambelas"
+                android:text="@string/lorem"
+                app:trimCollapsedText="@string/tampilkan"
+                app:trimExpandedText="@string/sembunyikan"
+                app:trimLength="300"
+                app:trimMode="trimModeLength" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/enambelas"/>
+
+            <TextView
+                android:layout_marginStart="@dimen/enambelas"
+                android:layout_marginEnd="@dimen/enambelas"
+                android:layout_marginBottom="@dimen/enambelas"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/informasi_kontak"/>
+
+            <androidx.cardview.widget.CardView
+                android:layout_marginStart="@dimen/enambelas"
+                android:layout_marginEnd="@dimen/enambelas"
+                app:cardCornerRadius="@dimen/delapan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:padding="@dimen/enambelas"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/ic_local_phone_black_24dp"
+                        android:drawablePadding="16dp"
+                        android:text="@string/hubungi_kami"/>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/grey"/>
+
+                    <TextView
+                        android:padding="@dimen/enambelas"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/ic_email_black_24dp"
+                        android:drawablePadding="16dp"
+                        android:text="@string/email_kami"/>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/grey"/>
+
+                    <TextView
+                        android:padding="@dimen/enambelas"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/ic_near_me_black_24dp"
+                        android:drawablePadding="16dp"
+                        android:text="@string/menuju_lokasi"/>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/enambelas"/>
+
+            <TextView
+                android:layout_marginStart="@dimen/enambelas"
+                android:layout_marginEnd="@dimen/enambelas"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/untuk_bisnis_lebih_lanjut"/>
+
+            <androidx.cardview.widget.CardView
+                android:layout_margin="@dimen/enambelas"
+                app:cardCornerRadius="@dimen/delapan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:padding="@dimen/enambelas"
+                    android:drawableStart="@drawable/ic_language_black_24dp"
+                    android:drawablePadding="@dimen/enambelas"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/kunjung_kami"/>
+
+            </androidx.cardview.widget.CardView>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/tigadua"/>
+
+            <TextView
+                android:textAllCaps="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/lihat_review"
+                android:textColor="@color/colorPrimary"
+                android:textStyle="bold"
+                android:textAlignment="center"/>
+
+            <View
+                android:layout_marginTop="@dimen/enambelas"
+                android:layout_marginBottom="@dimen/enambelas"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_tulis_ulasan"
+                android:layout_marginStart="@dimen/enambelas"
+                android:layout_marginEnd="@dimen/enambelas"
+                android:layout_marginBottom="@dimen/enambelas"
+                android:background="@drawable/primary_btn"
+                android:textColor="@android:color/white"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/tulis_ulasan"/>
+
+            <androidx.cardview.widget.CardView
+                android:layout_marginStart="@dimen/enambelas"
+                android:layout_marginEnd="@dimen/enambelas"
+                android:layout_marginBottom="@dimen/enambelas"
+                app:cardElevation="@dimen/delapan"
+                app:cardCornerRadius="@dimen/delapan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:padding="@dimen/enambelas"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:textStyle="bold"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/review_anda"/>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="16dp"/>
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <androidx.appcompat.widget.AppCompatRatingBar
+                            style="@style/Widget.AppCompat.RatingBar.Small"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:numStars="5" />
+
+                        <TextView
+                            android:layout_marginStart="16dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/tanggal_review"/>
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/delapan"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/lorem"/>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/enambelas"/>
+
+                    <TextView
+                        android:textColor="@color/colorPrimary"
+                        android:textStyle="bold"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="center"
+                        android:text="@string/edit_review_anda"/>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

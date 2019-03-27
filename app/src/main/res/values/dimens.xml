@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="delapan">8dp</dimen>
+    <dimen name="enambelas">16dp</dimen>
+    <dimen name="tigadua">32dp</dimen>
+</resources>

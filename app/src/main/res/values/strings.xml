@@ -1,0 +1,34 @@
+<resources>
+    <string name="app_name">Jlajah</string>
+    <string name="beranda">Beranda</string>
+    <string name="akun">Akun</string>
+    <string name="bookmark">Bookmark</string>
+    <string name="peta">Peta</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="cari_lokasi">Cari Lokasi</string>
+    <string name="image_description">Image Description</string>
+    <string name="kategori">Kategori</string>
+    <string name="lokasi_populer">Lokasi Populer</string>
+    <string name="title">title</string>
+    <string name="alamat_lokasi">alamat lokasi</string>
+    <string name="score_rating">5.0</string>
+    <string name="nama_lokasi">Nama Lokasi</string>
+    <string name="tampilkan">Tampilkan</string>
+    <string name="lorem">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</string>
+    <string name="informasi_kontak">Informasi Kontak</string>
+    <string name="hubungi_kami">Hubungi Kami</string>
+    <string name="email_kami">Email Kami</string>
+    <string name="untuk_bisnis_lebih_lanjut">Untuk bisnis lebih lanjut</string>
+    <string name="menuju_lokasi">Menuju Lokasi</string>
+    <string name="kunjung_kami">Kunjung Kami</string>
+    <string name="lihat_review">LIHAT ULASAN</string>
+    <string name="masukkan_rating">Masukkan Rating</string>
+    <string name="masukkan_review">Masukkan Ulasan</string>
+    <string name="sembunyikan">Sembunyikan</string>
+    <string name="submit">SUBMIT</string>
+    <string name="tanggal_review">30/12/2019 19:30</string>
+    <string name="review_anda">Ulasan Anda</string>
+    <string name="edit_review_anda">Edit ulasan anda</string>
+    <string name="tulis_ulasan">Tulis Ulasan</string>
+    <string name="posting">POSTING</string>
+</resources>
