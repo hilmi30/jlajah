@@ -66,6 +66,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/edt_nothing"
+            android:maxLength="500"
             android:hint="@string/masukkan_review"/>
 
     </androidx.cardview.widget.CardView>

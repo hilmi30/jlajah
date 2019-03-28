@@ -11,7 +11,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
-        <activity android:name=".ulasan.UlasanActivity"></activity>
+        <activity android:name=".signup.SignupActivity"></activity>
+        <activity
+            android:name=".login.LoginActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity android:name=".ulasan.UlasanActivity" />
         <activity
             android:name=".detaillokasi.DetailLokasiActivity"
             android:windowSoftInputMode="stateHidden" />

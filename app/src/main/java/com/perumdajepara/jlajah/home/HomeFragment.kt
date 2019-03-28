@@ -10,7 +10,8 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.perumdajepara.jlajah.R
-import com.perumdajepara.jlajah.kategorilokasi.KategoriLokasiActivity
+import com.perumdajepara.jlajah.detaillokasi.DetailLokasiActivity
+import com.perumdajepara.jlajah.login.LoginActivity
 import kotlinx.android.synthetic.main.fragment_home.*
 import org.jetbrains.anko.support.v4.startActivity
 
@@ -33,7 +34,7 @@ class HomeFragment : Fragment() {
         }
 
         val adapterKategori = KategoriAdapter(kategoriData) {
-            startActivity<KategoriLokasiActivity>()
+            startActivity<LoginActivity>()
         }
 
         rv_kategori.apply {
@@ -47,7 +48,10 @@ class HomeFragment : Fragment() {
                 4.0F, 4.0))
         }
 
-        val adapterLokasiPopuler = LokasiPopulerAdapter(lokasiPopulerData)
+        val adapterLokasiPopuler = LokasiPopulerAdapter(lokasiPopulerData) {
+            startActivity<DetailLokasiActivity>()
+        }
+
         rv_lokasi_populer.apply {
             adapter = adapterLokasiPopuler
             layoutManager = LinearLayoutManager(context, LinearLayout.HORIZONTAL, false)

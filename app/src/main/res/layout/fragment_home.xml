@@ -28,6 +28,7 @@
             android:layout_height="wrap_content">
 
             <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                android:inputType="text"
                 android:drawableStart="@drawable/ic_search_black_24dp"
                 android:drawableEnd="@drawable/filter"
                 android:drawablePadding="16dp"

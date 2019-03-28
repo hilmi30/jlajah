@@ -1,14 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".bookmark.BookmarkFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <ImageView
+        android:id="@+id/img_bookmark_logo"
+        android:contentDescription="@string/image_description"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:src="@drawable/jlajah"
+        android:layout_alignParentTop="true"
+        android:padding="16dp"/>
 
-</FrameLayout>
+    <TextView
+        android:id="@+id/tv_data_kosong"
+        android:visibility="invisible"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:textAlignment="center"
+        android:text="@string/bookmark_kosong"/>
+
+    <androidx.cardview.widget.CardView
+        android:layout_below="@id/img_bookmark_logo"
+        android:id="@+id/cv_cara_hapus"
+        android:layout_marginStart="@dimen/delapan"
+        android:layout_marginEnd="@dimen/delapan"
+        android:layout_marginTop="@dimen/delapan"
+        android:layout_marginBottom="4dp"
+        app:cardCornerRadius="@dimen/delapan"
+        app:cardElevation="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:padding="@dimen/enambelas"
+            android:background="@color/grey"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/geser_kiri_kanan"/>
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:layout_below="@id/cv_cara_hapus"
+        android:layout_marginStart="@dimen/delapan"
+        android:layout_marginEnd="@dimen/delapan"
+        android:layout_marginBottom="@dimen/delapan"
+        android:layout_marginTop="4dp"
+        app:cardCornerRadius="@dimen/delapan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_bookmark"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+    </androidx.cardview.widget.CardView>
+
+</RelativeLayout>

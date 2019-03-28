@@ -1,6 +1,7 @@
 package com.perumdajepara.jlajah.detaillokasi
 
 import android.os.Bundle
+import android.view.Menu
 import androidx.appcompat.app.AppCompatActivity
 import com.perumdajepara.jlajah.R
 import com.perumdajepara.jlajah.ulasan.UlasanActivity
@@ -38,6 +39,11 @@ class DetailLokasiActivity : AppCompatActivity() {
             setViewPager(pager_detail_lokasi)
             radius = 5 * density
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_detail_lokasi, menu)
+        return true
     }
 
     override fun onSupportNavigateUp(): Boolean {

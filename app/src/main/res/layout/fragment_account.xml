@@ -1,14 +1,206 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
     tools:context=".account.AccountFragment">
 
-    <!-- TODO: Update blank fragment layout -->
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar_account"
+        app:elevation="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.Toolbar
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            android:id="@+id/toolbar_account"
+            android:layout_width="match_parent"
+            android:layout_height="?android:attr/actionBarSize">
+
+        </androidx.appcompat.widget.Toolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:drawableTop="@drawable/user"
+        android:background="@color/colorPrimary"
+        android:text="@string/nama_user"
+        android:textAlignment="center"
+        android:drawablePadding="16dp"
+        android:paddingTop="32dp"
+        android:paddingBottom="32dp"
+        android:textColor="@android:color/white"/>
 
-</FrameLayout>
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/data_diri"/>
+
+            <androidx.cardview.widget.CardView
+                android:layout_margin="@dimen/enambelas"
+                app:cardCornerRadius="@dimen/delapan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:maxLines="1"
+                        android:gravity="center_vertical"
+                        android:padding="@dimen/enambelas"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/ic_email_black_24dp"
+                        android:drawablePadding="16dp"
+                        android:text="@string/kosong"/>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/grey"/>
+
+                    <TextView
+                        android:maxLines="1"
+                        android:textAllCaps="true"
+                        android:gravity="center_vertical"
+                        android:padding="@dimen/enambelas"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/ic_person_black_24dp"
+                        android:drawableEnd="@drawable/ic_edit_black_24dp"
+                        android:drawablePadding="16dp"
+                        android:text="@string/kosong"/>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/grey"/>
+
+                    <TextView
+                        android:maxLines="1"
+                        android:gravity="center_vertical"
+                        android:padding="@dimen/enambelas"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/ic_local_phone_black_24dp"
+                        android:drawableEnd="@drawable/ic_edit_black_24dp"
+                        android:drawablePadding="16dp"
+                        android:text="@string/kosong"/>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/grey"/>
+
+                    <TextView
+                        android:maxLines="1"
+                        android:gravity="center_vertical"
+                        android:padding="@dimen/enambelas"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/gender"
+                        android:drawableEnd="@drawable/ic_edit_black_24dp"
+                        android:drawablePadding="16dp"
+                        android:text="@string/kosong"/>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/pengaturan"/>
+
+            <androidx.cardview.widget.CardView
+                android:layout_marginStart="@dimen/enambelas"
+                android:layout_marginEnd="@dimen/enambelas"
+                android:layout_marginTop="@dimen/enambelas"
+                android:layout_marginBottom="4dp"
+                app:cardCornerRadius="@dimen/delapan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:padding="@dimen/enambelas"
+                        android:gravity="center_vertical"
+                        android:drawableStart="@drawable/language"
+                        android:drawablePadding="@dimen/enambelas"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/bahasa"
+                        android:layout_alignParentStart="true"/>
+
+                    <TextView
+                        android:textColor="@android:color/darker_gray"
+                        android:layout_centerVertical="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/bahasa"
+                        android:layout_marginEnd="@dimen/enambelas"
+                        android:layout_alignParentEnd="true"
+                        tools:ignore="RelativeOverlap" />
+
+                </RelativeLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="@dimen/enambelas"
+                android:layout_marginBottom="@dimen/enambelas"
+                android:layout_marginStart="@dimen/enambelas"
+                app:cardCornerRadius="@dimen/delapan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:padding="@dimen/enambelas"
+                    android:gravity="center_vertical"
+                    android:drawableStart="@drawable/lock"
+                    android:drawablePadding="@dimen/enambelas"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/ganti_password"/>
+
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:layout_marginTop="@dimen/enambelas"
+                android:layout_marginBottom="32dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/keluar"
+                android:textAlignment="center"
+                android:textColor="@color/accent"
+                android:textStyle="bold"/>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+</LinearLayout>
