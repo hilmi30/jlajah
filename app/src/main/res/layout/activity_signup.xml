@@ -14,6 +14,7 @@
         android:layout_height="wrap_content">
 
         <androidx.appcompat.widget.Toolbar
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             android:id="@+id/toolbar_signup"
             android:layout_width="match_parent"
             android:layout_height="?android:attr/actionBarSize">
@@ -35,6 +36,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="100dp"/>
 
+            <ProgressBar
+                android:id="@+id/pb_signup"
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="16dp"/>
+
             <androidx.cardview.widget.CardView
                 android:layout_marginStart="@dimen/enambelas"
                 android:layout_marginEnd="@dimen/enambelas"
@@ -44,6 +53,30 @@
                 android:layout_height="wrap_content">
 
                 <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                    android:textAllCaps="false"
+                    android:id="@+id/edt_signup_username"
+                    android:textSize="14sp"
+                    android:inputType="text"
+                    android:padding="@dimen/enambelas"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/edt_nothing"
+                    android:hint="@string/username"
+                    tools:ignore="Autofill" />
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_marginStart="@dimen/enambelas"
+                android:layout_marginEnd="@dimen/enambelas"
+                android:layout_marginBottom="@dimen/delapan"
+                app:cardCornerRadius="@dimen/delapan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                    android:id="@+id/edt_signup_nama"
+                    android:textSize="14sp"
                     android:inputType="text"
                     android:padding="@dimen/enambelas"
                     android:layout_width="match_parent"
@@ -63,6 +96,8 @@
                 android:layout_height="wrap_content">
 
                 <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                    android:id="@+id/edt_signup_email"
+                    android:textSize="14sp"
                     android:inputType="textEmailAddress"
                     android:padding="@dimen/enambelas"
                     android:layout_width="match_parent"
@@ -82,7 +117,9 @@
                 android:layout_height="wrap_content">
 
                 <androidx.appcompat.widget.AppCompatAutoCompleteTextView
-                    android:inputType="text"
+                    android:id="@+id/edt_signup_notelp"
+                    android:textSize="14sp"
+                    android:inputType="phone"
                     android:padding="16dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -104,17 +141,17 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <androidx.appcompat.widget.AppCompatAutoCompleteTextView
-                        android:enabled="false"
-                        android:inputType="text"
+                    <TextView
+                        android:id="@+id/tv_signup_gender"
+                        android:textSize="14sp"
                         android:padding="@dimen/enambelas"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/edt_nothing"
-                        android:hint="@string/gender"
-                        tools:ignore="Autofill" />
+                        android:hint="@string/gender" />
 
                     <TextView
+                        android:id="@+id/tv_signup_nilai_gender"
+                        android:textSize="14sp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/pria"
@@ -136,6 +173,8 @@
                 android:layout_height="wrap_content">
 
                 <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                    android:id="@+id/edt_signup_password"
+                    android:textSize="14sp"
                     android:inputType="textPassword"
                     android:padding="@dimen/enambelas"
                     android:layout_width="match_parent"
@@ -155,7 +194,9 @@
                 android:layout_height="wrap_content">
 
                 <androidx.appcompat.widget.AppCompatAutoCompleteTextView
-                    android:inputType="text"
+                    android:id="@+id/edt_signup_ulangi_password"
+                    android:textSize="14sp"
+                    android:inputType="textPassword"
                     android:padding="@dimen/enambelas"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -166,6 +207,8 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_signup_daftar"
+                android:textSize="14sp"
                 android:layout_margin="@dimen/enambelas"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

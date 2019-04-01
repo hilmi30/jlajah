@@ -58,4 +58,21 @@
     <string name="gender">Gender</string>
     <string name="pria">Pria</string>
     <string name="ulangi_password">Ulangi Password</string>
+    <string name="wanita">Wanita</string>
+    <string name="pilih">Pilih</string>
+    <string name="batal">Batal</string>
+    <string name="username">Username</string>
+    <string name="username_kosong">username tidak boleh kosong</string>
+    <string name="email_kosong">email tidak boleh kosong</string>
+    <string name="password_kosong">password tidak boleh kosong</string>
+    <string name="nama_kosong">nama tidak boleh kosong</string>
+    <string name="notelp_kosong">no telp tidak boleh kosong</string>
+    <string name="username_spasi">username tidak boleh ada spasi</string>
+    <string name="username_tidak_benar">username tidak benar</string>
+    <string name="email_tidak_benar">email tidak benar</string>
+    <string name="password_length">password harus lebih dari 6 karakter</string>
+    <string name="password_tidak_sama">password tidak sama</string>
+    <string name="terjadi_kesalahan">Terjadi kesalahan</string>
+    <string name="cek_koneksi">Gagal memuat, cek koneksi anda</string>
+    <string name="username_email_ada">Username atau email sudah ada</string>
 </resources>
