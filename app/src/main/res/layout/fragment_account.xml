@@ -24,6 +24,7 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <TextView
+        android:id="@+id/tv_nama_user"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:drawableTop="@drawable/user"
@@ -64,6 +65,7 @@
                     android:layout_height="wrap_content">
 
                     <TextView
+                        android:id="@+id/tv_email"
                         android:maxLines="1"
                         android:gravity="center_vertical"
                         android:padding="@dimen/enambelas"
@@ -71,14 +73,17 @@
                         android:layout_height="wrap_content"
                         android:drawableStart="@drawable/ic_email_black_24dp"
                         android:drawablePadding="16dp"
-                        android:text="@string/kosong"/>
+                        android:hint="@string/email"/>
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:background="@color/grey"/>
 
-                    <TextView
+                    <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                        android:textSize="14sp"
+                        android:background="@drawable/edt_nothing"
+                        android:id="@+id/tv_nama_user2"
                         android:maxLines="1"
                         android:textAllCaps="true"
                         android:gravity="center_vertical"
@@ -88,14 +93,17 @@
                         android:drawableStart="@drawable/ic_person_black_24dp"
                         android:drawableEnd="@drawable/ic_edit_black_24dp"
                         android:drawablePadding="16dp"
-                        android:text="@string/kosong"/>
+                        android:hint="@string/nama_lengkap"/>
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:background="@color/grey"/>
 
-                    <TextView
+                    <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                        android:background="@drawable/edt_nothing"
+                        android:textSize="14sp"
+                        android:id="@+id/tv_notelp"
                         android:maxLines="1"
                         android:gravity="center_vertical"
                         android:padding="@dimen/enambelas"
@@ -104,14 +112,18 @@
                         android:drawableStart="@drawable/ic_local_phone_black_24dp"
                         android:drawableEnd="@drawable/ic_edit_black_24dp"
                         android:drawablePadding="16dp"
-                        android:text="@string/kosong"/>
+                        android:hint="@string/no_telepon"/>
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:background="@color/grey"/>
 
-                    <TextView
+                    <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                        android:focusable="false"
+                        android:textSize="14sp"
+                        android:background="@drawable/edt_nothing"
+                        android:id="@+id/tv_gender"
                         android:maxLines="1"
                         android:gravity="center_vertical"
                         android:padding="@dimen/enambelas"
@@ -120,7 +132,7 @@
                         android:drawableStart="@drawable/gender"
                         android:drawableEnd="@drawable/ic_edit_black_24dp"
                         android:drawablePadding="16dp"
-                        android:text="@string/kosong"/>
+                        android:hint="@string/gender"/>
 
                 </LinearLayout>
 
@@ -191,6 +203,7 @@
             </androidx.cardview.widget.CardView>
 
             <TextView
+                android:id="@+id/tv_logout"
                 android:layout_marginTop="@dimen/enambelas"
                 android:layout_marginBottom="32dp"
                 android:layout_width="match_parent"

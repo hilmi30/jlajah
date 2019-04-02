@@ -56,9 +56,9 @@
     <string name="nama_lengkap">Nama Lengkap</string>
     <string name="no_telepon">No Telepon</string>
     <string name="gender">Gender</string>
-    <string name="pria">Pria</string>
+    <string name="pria">Laki-laki</string>
     <string name="ulangi_password">Ulangi Password</string>
-    <string name="wanita">Wanita</string>
+    <string name="wanita">Perempuan</string>
     <string name="pilih">Pilih</string>
     <string name="batal">Batal</string>
     <string name="username">Username</string>
@@ -75,4 +75,5 @@
     <string name="terjadi_kesalahan">Terjadi kesalahan</string>
     <string name="cek_koneksi">Gagal memuat, cek koneksi anda</string>
     <string name="username_email_ada">Username atau email sudah ada</string>
+    <string name="username_password_salah">Username atau password salah, silahkan coba lagi</string>
 </resources>

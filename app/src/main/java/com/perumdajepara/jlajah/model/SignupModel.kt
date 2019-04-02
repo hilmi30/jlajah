@@ -13,5 +13,5 @@ data class SignupModel (
     var message: String = "",
 
     @SerializedName("data")
-    var data: SignupUserData = SignupUserData()
+    var data: User = User()
 )

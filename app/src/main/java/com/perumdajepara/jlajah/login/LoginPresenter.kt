@@ -1,4 +1,4 @@
-package com.perumdajepara.jlajah.signup
+package com.perumdajepara.jlajah.login
 
 import com.perumdajepara.jlajah.BuildConfig
 import com.perumdajepara.jlajah.basecontract.BasePresenter
@@ -13,13 +13,13 @@ import java.net.UnknownHostException
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.TimeoutException
 
-class SignupPresenter: BasePresenter<SignupView> {
+class LoginPresenter: BasePresenter<LoginView> {
 
-    private var mView: SignupView? = null
-    private val services = RetrofitBuilder.getInstance(BuildConfig.BASE_URL_API).create(ApiRepository::class.java)
+    private var mView: LoginView? = null
+    private var services = RetrofitBuilder.getInstance(BuildConfig.BASE_URL_API).create(ApiRepository::class.java)
     private var disposable: Disposable? = null
 
-    override fun onAttach(view: SignupView) {
+    override fun onAttach(view: LoginView) {
         mView = view
     }
 
@@ -31,36 +31,26 @@ class SignupPresenter: BasePresenter<SignupView> {
         disposable?.dispose()
     }
 
-    fun signup(
-        username: String,
-        email: String,
-        password: String,
-        nama: String,
-        noTelp: String,
-        nilaiGender: String
-    ) {
+    fun login(email: String, password: String) {
         mView?.showLoading()
-        disposable = services.signup(username, email, password, nama, noTelp, nilaiGender)
+
+        disposable = services.login(email, password)
             .debounce(100, TimeUnit.MILLISECONDS)
             .timeout(10, TimeUnit.SECONDS)
             .subscribeOn(Schedulers.newThread())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeBy(
                 onNext = {
-                    if (it.statusCode == 200) {
-                        mView?.suksesRegister()
-                        mView?.hideLoading()
-                    }
+                    mView?.suksesLogin(it)
                 },
                 onError = {
                     if (it is HttpException) {
                         val errorCode = it.code().toString()
                         when (errorCode) {
-                            "422" -> mView?.usernameEmailSudahAda()
+                            "422" -> mView?.usernamePasswordSalah()
                             else -> mView?.terjadiKesalahan()
                         }
                     }
-
                     if (it is UnknownHostException || it is TimeoutException) mView?.cekKoneksi()
                     mView?.hideLoading()
                 },
@@ -69,6 +59,4 @@ class SignupPresenter: BasePresenter<SignupView> {
                 }
             )
     }
-
-
 }

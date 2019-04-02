@@ -1,5 +1,6 @@
 package com.perumdajepara.jlajah.network
 
+import com.perumdajepara.jlajah.model.LoginModel
 import com.perumdajepara.jlajah.model.SignupModel
 import io.reactivex.Observable
 import retrofit2.http.Field
@@ -17,4 +18,11 @@ interface ApiRepository {
         @Field("nomer_hp") nomerHp: String,
         @Field("gender_id") genderId: String
     ): Observable<SignupModel>
+
+    @FormUrlEncoded
+    @POST("auth/login")
+    fun login(
+        @Field("email") email: String,
+        @Field("password") password: String
+    ): Observable<LoginModel>
 }

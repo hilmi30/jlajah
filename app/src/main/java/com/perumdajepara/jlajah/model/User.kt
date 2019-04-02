@@ -2,7 +2,7 @@ package com.perumdajepara.jlajah.model
 
 import com.google.gson.annotations.SerializedName
 
-data class SignupUserData (
+data class User (
     @SerializedName("username")
     var username: String = "",
 
@@ -10,7 +10,7 @@ data class SignupUserData (
     var email: String = "",
 
     @SerializedName("gender")
-    var gender: SignupGenderData = SignupGenderData(),
+    var gender: Gender = Gender(),
 
     @SerializedName("nomer_telp")
     var noTelp: String = "",
