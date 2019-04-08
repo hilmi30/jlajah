@@ -7,6 +7,7 @@ import com.perumdajepara.jlajah.R
 import com.perumdajepara.jlajah.login.LoginActivity
 import com.perumdajepara.jlajah.main.MainActivity
 import com.perumdajepara.jlajah.util.ConstantVariable
+import com.perumdajepara.jlajah.util.setLocale
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -18,14 +19,20 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
 
-        // panggil sharedpreferences
-        val userTokenPref = getSharedPreferences(ConstantVariable.userPref, Context.MODE_PRIVATE)
-        // cek status user token
-        val statusToken = userTokenPref.getBoolean(ConstantVariable.status, false)
+        // panggil user sharedpreferences dan cek status user
+        val userPref = getSharedPreferences(ConstantVariable.userPref, Context.MODE_PRIVATE)
+        val status = userPref.getBoolean(ConstantVariable.status, false)
+
+        // panggil bahasa sharepreferences dan akes lang
+        val langPref = getSharedPreferences(ConstantVariable.lang, Context.MODE_PRIVATE)
+        val lang = langPref.getString(ConstantVariable.myLang, "in")
+
+        // set bahasa
+        setLocale(this, lang as String)
 
         GlobalScope.launch {
             delay(2000)
-            when (statusToken) {
+            when (status) {
                 true -> {
                     startActivity<MainActivity>()
                     finish()

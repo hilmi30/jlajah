@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.perumdajepara.jlajah.R
 import com.perumdajepara.jlajah.detaillokasi.DetailLokasiActivity
-import com.perumdajepara.jlajah.login.LoginActivity
+import com.perumdajepara.jlajah.kategorilokasi.KategoriLokasiActivity
 import kotlinx.android.synthetic.main.fragment_home.*
 import org.jetbrains.anko.support.v4.startActivity
 
@@ -34,7 +34,7 @@ class HomeFragment : Fragment() {
         }
 
         val adapterKategori = KategoriAdapter(kategoriData) {
-            startActivity<LoginActivity>()
+            startActivity<KategoriLokasiActivity>()
         }
 
         rv_kategori.apply {

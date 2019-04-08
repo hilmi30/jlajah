@@ -28,6 +28,7 @@
             android:layout_height="wrap_content">
 
             <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                android:textSize="14sp"
                 android:inputType="text"
                 android:drawableStart="@drawable/ic_search_black_24dp"
                 android:drawableEnd="@drawable/filter"
@@ -59,40 +60,46 @@
 
         </androidx.cardview.widget.CardView>
 
-        <androidx.cardview.widget.CardView
-            app:cardCornerRadius="8dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
+        <TextView
+            android:layout_marginTop="@dimen/enambelas"
+            android:layout_marginStart="@dimen/delapan"
+            android:layout_marginEnd="@dimen/delapan"
+            android:layout_marginBottom="@dimen/delapan"
+            android:textStyle="bold"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:text="@string/lokasi_populer"/>
 
-            <LinearLayout
-                android:padding="16dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+        <com.takusemba.multisnaprecyclerview.MultiSnapRecyclerView
+            android:padding="@dimen/delapan"
+            android:id="@+id/rv_lokasi_populer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:msrv_snap_count="1"
+            app:msrv_gravity="center">
 
-                <TextView
-                    android:textStyle="bold"
-                    android:layout_marginBottom="16dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/lokasi_populer"/>
+        </com.takusemba.multisnaprecyclerview.MultiSnapRecyclerView>
 
-                <com.takusemba.multisnaprecyclerview.MultiSnapRecyclerView
-                    android:id="@+id/rv_lokasi_populer"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:msrv_snap_count="1"
-                    app:msrv_gravity="center">
+        <!--<androidx.cardview.widget.CardView-->
+            <!--app:cardCornerRadius="8dp"-->
+            <!--android:layout_marginTop="4dp"-->
+            <!--android:layout_marginStart="8dp"-->
+            <!--android:layout_marginEnd="8dp"-->
+            <!--android:layout_marginBottom="8dp"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content">-->
 
-                </com.takusemba.multisnaprecyclerview.MultiSnapRecyclerView>
+            <!--<LinearLayout-->
+                <!--android:padding="16dp"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:orientation="vertical">-->
 
-            </LinearLayout>
+                <!---->
 
-        </androidx.cardview.widget.CardView>
+            <!--</LinearLayout>-->
+
+        <!--</androidx.cardview.widget.CardView>-->
 
 
     </LinearLayout>

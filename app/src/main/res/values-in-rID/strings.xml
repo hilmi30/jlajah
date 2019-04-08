@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name" translatable="false">Jlajah</string>
+    <string name="app_name">Jlajah</string>
     <string name="beranda">Beranda</string>
     <string name="akun">Akun</string>
     <string name="bookmark">Bookmark</string>
     <string name="peta">Peta</string>
-    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="cari_lokasi">Cari Lokasi</string>
-    <string name="image_description" translatable="false">Image Description</string>
+    <string name="image_description">Image Description</string>
     <string name="kategori">Kategori</string>
     <string name="lokasi_populer">Lokasi Populer</string>
-    <string name="title" translatable="false">title</string>
+    <string name="title">title</string>
     <string name="alamat_lokasi">alamat lokasi</string>
-    <string name="score_rating" translatable="false">5.0</string>
+    <string name="score_rating">5.0</string>
     <string name="nama_lokasi">Nama Lokasi</string>
     <string name="tampilkan">Tampilkan</string>
-    <string name="lorem" translatable="false">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</string>
+    <string name="lorem">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</string>
     <string name="informasi_kontak">Informasi Kontak</string>
     <string name="hubungi_kami">Hubungi Kami</string>
     <string name="email_kami">Email Kami</string>
@@ -26,18 +26,19 @@
     <string name="masukkan_rating">Masukkan Rating</string>
     <string name="masukkan_review">Masukkan Ulasan</string>
     <string name="sembunyikan">Sembunyikan</string>
-    <string name="submit" translatable="false">SUBMIT</string>
-    <string name="tanggal_review" translatable="false">30/12/2019 19:30</string>
+    <string name="submit">SUBMIT</string>
+    <string name="tanggal_review">30/12/2019 19:30</string>
     <string name="review_anda">Ulasan Anda</string>
     <string name="edit_review_anda">Edit ulasan anda</string>
     <string name="tulis_ulasan">Tulis Ulasan</string>
-    <string name="posting" translatable="false">POSTING</string>
+    <string name="posting">POSTING</string>
     <string name="nama_user">NAMA USER</string>
     <string name="data_diri">Data Diri</string>
-    <string name="email_account" translatable="false">email@email.com</string>
-    <string name="kosong" translatable="false">-</string>
+    <string name="email_account">email@email.com</string>
+    <string name="kosong">-</string>
     <string name="pengaturan">Pengaturan</string>
     <string name="bahasa">Bahasa</string>
+    <string name="ganti_password">Ganti Password</string>
     <string name="simpan">SIMPAN</string>
     <string name="keluar">KELUAR</string>
     <string name="bookmark_kosong">Anda tidak memiliki lokasi yang ditandai</string>
@@ -47,21 +48,21 @@
     <string name="tidak">Tidak</string>
     <string name="geser_kiri_kanan">Geser item ke kiri atau kanan untuk menghapus dari daftar bookmark</string>
     <string name="share">Bagikan</string>
-    <string name="unbookmark" translatable="false">Unbookmark</string>
-    <string name="email" translatable="false">Email</string>
-    <string name="password" translatable="false">Password</string>
+    <string name="unbookmark">Unbookmark</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
     <string name="lupa_password">Lupa Password?</string>
     <string name="masuk">Masuk</string>
     <string name="daftar">Daftar</string>
     <string name="nama_lengkap">Nama Lengkap</string>
     <string name="no_telepon">No Telepon</string>
-    <string name="gender" translatable="false">Gender</string>
+    <string name="gender">Gender</string>
     <string name="pria">Laki-laki</string>
     <string name="ulangi_password">Ulangi Password</string>
     <string name="wanita">Perempuan</string>
     <string name="pilih">Pilih</string>
     <string name="batal">Batal</string>
-    <string name="username" translatable="false">Username</string>
+    <string name="username">Username</string>
     <string name="username_kosong">username tidak boleh kosong</string>
     <string name="email_kosong">email tidak boleh kosong</string>
     <string name="password_kosong">password tidak boleh kosong</string>
@@ -77,19 +78,16 @@
     <string name="username_email_ada">Username atau email sudah ada</string>
     <string name="username_password_salah">Username atau password salah, silahkan coba lagi</string>
     <string name="yakin_keluar">Yakin ingin keluar?</string>
-    <string name="indonesia" translatable="false">Indonesia</string>
-    <string name="english" translatable="false">English</string>
     <string name="bahasa_diubah">Bahasa berhasil diubah</string>
     <string name="password_diubah">Password berhasil diubah</string>
+    <string name="password_lama_salah">Password lama tidak benar</string>
     <string name="password_lama">Password lama</string>
     <string name="password_baru">Password baru</string>
-    <string name="password_lama_salah">Password lama tidak benar</string>
-    <string name="ganti_password">Ganti Password</string>
     <string name="username_password_kosong">Username atau password tidak boleh kosong</string>
     <string name="password_lama_kosong">Password lama tidak boleh kosong</string>
     <string name="password_baru_kosong">Password baru tidak boleh kosong</string>
     <string name="profil_diubah">Profil berhasil diubah</string>
-    <string name="email_tidak_ditemukan">Email tidak ditemukan</string>
     <string name="lupa_pass_cek_email">Permintaan reset password berhasil, silahkan cek email anda untuk aktivasi</string>
+    <string name="email_tidak_ditemukan">Email tidak ditemukan</string>
     <string name="tutup">Tutup</string>
 </resources>

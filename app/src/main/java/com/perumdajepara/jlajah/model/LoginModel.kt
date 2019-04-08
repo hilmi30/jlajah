@@ -15,7 +15,7 @@ data class LoginModel(
     @SerializedName("email")
     var email: String = "",
 
-    @SerializedName("access-token")
+    @SerializedName("access_token")
     var accessToken: String = "",
 
     @SerializedName("full_name")

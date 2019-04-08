@@ -6,8 +6,10 @@ import com.perumdajepara.jlajah.model.LoginModel
 interface LoginView: BaseView {
     fun showLoading()
     fun hideLoading()
-    fun cekKoneksi()
     fun suksesLogin(it: LoginModel)
-    fun usernamePasswordSalah()
-    fun terjadiKesalahan()
+    fun error(msg: String)
+    fun suksesForgetPass()
+    fun showLupaPassLoading()
+    fun hideLupaPassLoading()
+    fun submitBtnIsEnabled(b: Boolean)
 }

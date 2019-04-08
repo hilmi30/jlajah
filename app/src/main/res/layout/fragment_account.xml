@@ -1,42 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     tools:context=".account.AccountFragment">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar_account"
-        app:elevation="0dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="180dp">
 
-        <androidx.appcompat.widget.Toolbar
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            android:id="@+id/toolbar_account"
+        <com.google.android.material.appbar.CollapsingToolbarLayout
             android:layout_width="match_parent"
-            android:layout_height="?android:attr/actionBarSize">
+            android:layout_height="match_parent"
+            app:scrimAnimationDuration="300"
+            app:contentScrim="@color/colorPrimary"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
-        </androidx.appcompat.widget.Toolbar>
+            <LinearLayout
+                android:layout_gravity="center"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:id="@+id/tv_nama_user"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorPrimary"
+                    android:drawableTop="@drawable/user"
+                    android:text="@string/nama_user"
+                    android:textAlignment="center"
+                    android:drawablePadding="@dimen/delapan"
+                    android:textColor="@android:color/white"/>
+
+                <TextView
+                    android:id="@+id/tv_username"
+                    android:textSize="12sp"
+                    android:textColor="@android:color/white"
+                    android:background="@color/colorPrimary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/username"
+                    android:textAlignment="center" />
+
+            </LinearLayout>
+
+            <androidx.appcompat.widget.Toolbar
+                app:layout_collapseMode="pin"
+                android:id="@+id/toolbar_account"
+                android:layout_width="match_parent"
+                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                android:layout_height="?android:attr/actionBarSize">
+
+            </androidx.appcompat.widget.Toolbar>
+
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <TextView
-        android:id="@+id/tv_nama_user"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:drawableTop="@drawable/user"
-        android:background="@color/colorPrimary"
-        android:text="@string/nama_user"
-        android:textAlignment="center"
-        android:drawablePadding="16dp"
-        android:paddingTop="32dp"
-        android:paddingBottom="32dp"
-        android:textColor="@android:color/white"/>
-
     <androidx.core.widget.NestedScrollView
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -80,12 +107,28 @@
                         android:layout_height="1dp"
                         android:background="@color/grey"/>
 
+                    <TextView
+                        android:id="@+id/tv_username2"
+                        android:maxLines="1"
+                        android:gravity="center_vertical"
+                        android:padding="@dimen/enambelas"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/ic_person_pin_black_24dp"
+                        android:drawablePadding="16dp"
+                        android:hint="@string/username"/>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/grey"/>
+
                     <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                        android:inputType="text"
                         android:textSize="14sp"
                         android:background="@drawable/edt_nothing"
                         android:id="@+id/tv_nama_user2"
                         android:maxLines="1"
-                        android:textAllCaps="true"
                         android:gravity="center_vertical"
                         android:padding="@dimen/enambelas"
                         android:layout_width="match_parent"
@@ -101,6 +144,7 @@
                         android:background="@color/grey"/>
 
                     <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                        android:inputType="phone"
                         android:background="@drawable/edt_nothing"
                         android:textSize="14sp"
                         android:id="@+id/tv_notelp"
@@ -155,6 +199,7 @@
                 android:layout_height="wrap_content">
 
                 <RelativeLayout
+                    android:id="@+id/lyt_bahasa"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
@@ -169,6 +214,7 @@
                         android:layout_alignParentStart="true"/>
 
                     <TextView
+                        android:id="@+id/tv_bahasa"
                         android:textColor="@android:color/darker_gray"
                         android:layout_centerVertical="true"
                         android:layout_width="wrap_content"
@@ -192,6 +238,7 @@
                 android:layout_height="wrap_content">
 
                 <TextView
+                    android:id="@+id/tv_ganti_password"
                     android:padding="@dimen/enambelas"
                     android:gravity="center_vertical"
                     android:drawableStart="@drawable/lock"
@@ -216,4 +263,4 @@
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>
-</LinearLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

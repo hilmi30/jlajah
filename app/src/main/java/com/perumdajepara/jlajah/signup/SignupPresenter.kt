@@ -1,6 +1,8 @@
 package com.perumdajepara.jlajah.signup
 
+import android.content.Context
 import com.perumdajepara.jlajah.BuildConfig
+import com.perumdajepara.jlajah.R
 import com.perumdajepara.jlajah.basecontract.BasePresenter
 import com.perumdajepara.jlajah.network.ApiRepository
 import com.perumdajepara.jlajah.network.RetrofitBuilder
@@ -37,7 +39,8 @@ class SignupPresenter: BasePresenter<SignupView> {
         password: String,
         nama: String,
         noTelp: String,
-        nilaiGender: String
+        nilaiGender: Int,
+        context: Context
     ) {
         mView?.showLoading()
         disposable = services.signup(username, email, password, nama, noTelp, nilaiGender)
@@ -54,14 +57,14 @@ class SignupPresenter: BasePresenter<SignupView> {
                 },
                 onError = {
                     if (it is HttpException) {
-                        val errorCode = it.code().toString()
+                        val errorCode = it.code()
                         when (errorCode) {
-                            "422" -> mView?.usernameEmailSudahAda()
-                            else -> mView?.terjadiKesalahan()
+                            422 -> mView?.error(context.getString(R.string.username_email_ada))
+                            else -> mView?.error(context.getString(R.string.terjadi_kesalahan))
                         }
                     }
 
-                    if (it is UnknownHostException || it is TimeoutException) mView?.cekKoneksi()
+                    if (it is UnknownHostException || it is TimeoutException) mView?.error(context.getString(R.string.cek_koneksi))
                     mView?.hideLoading()
                 },
                 onComplete = {

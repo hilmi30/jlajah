@@ -1,4 +1,4 @@
-package com.perumdajepara.jlajah.login
+package com.perumdajepara.jlajah.account
 
 import android.content.Context
 import com.perumdajepara.jlajah.BuildConfig
@@ -15,13 +15,13 @@ import java.net.UnknownHostException
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.TimeoutException
 
-class LoginPresenter: BasePresenter<LoginView> {
+class AccountPresenter: BasePresenter<AccountView> {
 
-    private var mView: LoginView? = null
+    private var mView: AccountView? = null
     private var services = RetrofitBuilder.getInstance(BuildConfig.BASE_URL_API).create(ApiRepository::class.java)
     private var disposable: Disposable? = null
 
-    override fun onAttach(view: LoginView) {
+    override fun onAttach(view: AccountView) {
         mView = view
     }
 
@@ -33,65 +33,64 @@ class LoginPresenter: BasePresenter<LoginView> {
         disposable?.dispose()
     }
 
-    fun login(email: String, password: String, context: Context) {
+    fun resetPassword(
+        userToken: String,
+        passLama: String,
+        passBaru: String,
+        context: Context?
+    ) {
         mView?.showLoading()
-
-        disposable = services.login(email, password)
+        mView?.submitResetBtnIsEnabled(false)
+        disposable = services.resetPassword(userToken, passLama, passBaru)
             .debounce(100, TimeUnit.MILLISECONDS)
             .timeout(10, TimeUnit.SECONDS)
             .subscribeOn(Schedulers.newThread())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeBy(
                 onNext = {
-                    mView?.suksesLogin(it)
+                    mView?.suksesResetPass()
+                    mView?.hideLoading()
+                    mView?.submitResetBtnIsEnabled(true)
                 },
                 onError = {
                     if (it is HttpException) {
                         val errorCode = it.code()
                         when (errorCode) {
-                            422 -> mView?.error(context.getString(R.string.username_password_salah))
-                            else -> mView?.error(context.getString(R.string.terjadi_kesalahan))
+                            422 -> mView?.error(context?.getString(R.string.password_lama_salah))
+                            else -> mView?.error(context?.getString(R.string.terjadi_kesalahan))
                         }
                     }
-                    if (it is UnknownHostException || it is TimeoutException) mView?.error(context.getString(R.string.cek_koneksi))
+                    if (it is UnknownHostException || it is TimeoutException) mView?.error(context?.getString(R.string.cek_koneksi))
                     mView?.hideLoading()
+                    mView?.submitResetBtnIsEnabled(true)
                 },
                 onComplete = {
                     mView?.hideLoading()
+                    mView?.submitResetBtnIsEnabled(true)
                 }
             )
     }
 
-    fun forgetPassword(email: String, password: String, context: Context) {
-        mView?.showLupaPassLoading()
-        mView?.submitBtnIsEnabled(false)
-
-        disposable = services.forgetPassword(email, password)
+    fun editProfile(accessToken: String, id: Int, nama: String, genderId: Int, notelp: String, context: Context) {
+        mView?.showProfilLoading()
+        disposable = services.editProfile(accessToken, id, nama, genderId, notelp)
             .debounce(100, TimeUnit.MILLISECONDS)
             .timeout(10, TimeUnit.SECONDS)
             .subscribeOn(Schedulers.newThread())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeBy(
                 onNext = {
-                    mView?.suksesForgetPass()
-                    mView?.submitBtnIsEnabled(true)
+                    mView?.suksesGantiProfil(it)
                 },
                 onError = {
-                    if (it is HttpException) {
-                        val errorCode = it.code()
-                        when (errorCode) {
-                            404 -> mView?.error(context.getString(R.string.email_tidak_ditemukan))
-                            else -> mView?.error(context.getString(R.string.terjadi_kesalahan))
-                        }
-                    }
+                    if (it is HttpException) mView?.error(context.getString(R.string.terjadi_kesalahan))
                     if (it is UnknownHostException || it is TimeoutException) mView?.error(context.getString(R.string.cek_koneksi))
-                    mView?.hideLupaPassLoading()
-                    mView?.submitBtnIsEnabled(true)
+                    mView?.hideProfilLoading()
                 },
                 onComplete = {
-                    mView?.hideLupaPassLoading()
-                    mView?.submitBtnIsEnabled(true)
+                    mView?.hideProfilLoading()
                 }
             )
     }
+
 }

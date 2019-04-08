@@ -6,8 +6,5 @@ interface SignupView: BaseView {
     fun showLoading()
     fun hideLoading()
     fun suksesRegister()
-    fun terjadiKesalahan()
-    fun cekKoneksi()
-    fun usernameEmailSudahAda()
-
+    fun error(msg: String)
 }

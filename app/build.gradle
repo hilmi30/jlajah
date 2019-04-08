@@ -50,6 +50,6 @@ dependencies {
     implementation 'io.reactivex.rxjava2:rxjava:2.2.6'
     implementation 'io.reactivex.rxjava2:rxkotlin:2.3.0'
     implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
-
-
+    // SQL Lite Library
+    implementation 'com.hinl:kotlindatabasehelper:1.0.0'
 }

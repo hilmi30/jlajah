@@ -22,5 +22,20 @@ data class User (
     var id: Int = 0,
 
     @SerializedName("access-token")
-    var accessToken: String = ""
+    var accessToken: String = "",
+
+    @SerializedName("token")
+    var token: String = "",
+
+    @SerializedName("id_user")
+    var idUser: String = "",
+
+    @SerializedName("alamat")
+    var alamat: String = "",
+
+    @SerializedName("nama_lengkap")
+    var namaLengkap: String = "",
+
+    @SerializedName("nomer_hp")
+    var nomerHp: String = ""
 )
