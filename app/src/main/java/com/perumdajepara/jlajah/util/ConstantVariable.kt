@@ -20,6 +20,9 @@ class ConstantVariable {
         var username = "username"
         var id = "id"
         var myLang = "myLang"
+
+        // variabel lain
+        var nameCategory = "nameCategory"
     }
 }
 

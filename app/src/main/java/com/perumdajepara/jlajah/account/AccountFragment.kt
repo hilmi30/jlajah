@@ -73,12 +73,10 @@ class AccountFragment : Fragment(), AccountView {
 
         // panggil user pref
         userPref = ctx.getSharedPreferences(ConstantVariable.userPref, Context.MODE_PRIVATE)
+        // get item userpref
         userToken = userPref.getString(ConstantVariable.accessToken, "") as String
         userId = userPref.getInt(ConstantVariable.id, 0)
-
-        // panggil bahasa pref dan akses lang
-        val langPref = ctx.getSharedPreferences(ConstantVariable.lang, Context.MODE_PRIVATE)
-        lang = langPref.getString(ConstantVariable.myLang, "in") as String
+        lang = userPref.getString(ConstantVariable.myLang, "in") as String
 
         // cek bahasa default
         tv_bahasa.text = if (lang == "in") getString(R.string.indonesia) else getString(R.string.english)

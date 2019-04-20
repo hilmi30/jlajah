@@ -21,11 +21,9 @@ class SplashActivity : AppCompatActivity() {
 
         // panggil user sharedpreferences dan cek status user
         val userPref = getSharedPreferences(ConstantVariable.userPref, Context.MODE_PRIVATE)
+        // get item userpref
         val status = userPref.getBoolean(ConstantVariable.status, false)
-
-        // panggil bahasa sharepreferences dan akes lang
-        val langPref = getSharedPreferences(ConstantVariable.lang, Context.MODE_PRIVATE)
-        val lang = langPref.getString(ConstantVariable.myLang, "in")
+        val lang = userPref.getString(ConstantVariable.myLang, "in")
 
         // set bahasa
         setLocale(this, lang as String)

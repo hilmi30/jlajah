@@ -19,6 +19,7 @@
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
             <LinearLayout
+                android:layout_marginTop="@dimen/delapan"
                 android:layout_gravity="center"
                 android:orientation="vertical"
                 android:layout_width="match_parent"

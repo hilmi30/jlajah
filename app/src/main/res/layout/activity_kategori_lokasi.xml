@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".kategorilokasi.KategoriLokasiActivity"
+    tools:context=".lokasibycategory.LokasiByCategoryActivity"
     android:orientation="vertical">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -44,6 +44,16 @@
 
     </androidx.cardview.widget.CardView>
 
+    <ProgressBar
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:visibility="visible"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:indeterminate="true"
+        android:id="@+id/pb_kategori_lokasi"/>
+
     <androidx.core.widget.NestedScrollView
         android:layout_marginTop="4dp"
         android:layout_marginStart="8dp"
@@ -60,7 +70,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_kategori_lokasi"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="match_parent">
 
             </androidx.recyclerview.widget.RecyclerView>
 

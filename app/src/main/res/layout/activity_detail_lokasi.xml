@@ -23,6 +23,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
+                <ProgressBar
+                    android:visibility="gone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/pb_lokasi_image"
+                    android:layout_centerInParent="true"/>
+
                 <androidx.viewpager.widget.ViewPager
                     android:id="@+id/pager_detail_lokasi"
                     android:layout_width="match_parent"
@@ -34,7 +41,7 @@
                     android:padding="8dp"
                     android:layout_centerHorizontal="true"
                     android:id="@+id/pageindicator_image_lokasi"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"/>
 
@@ -63,6 +70,7 @@
             android:layout_height="wrap_content">
 
             <TextView
+                android:id="@+id/tv_nama_lokasi"
                 android:layout_marginStart="@dimen/enambelas"
                 android:layout_marginTop="@dimen/enambelas"
                 android:layout_marginEnd="@dimen/enambelas"
@@ -71,16 +79,17 @@
                 android:textStyle="bold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/nama_lokasi"/>
+                android:text="@string/kosong"/>
 
             <TextView
+                android:id="@+id/tv_alamat_lokasi"
                 android:layout_marginStart="@dimen/enambelas"
                 android:layout_marginEnd="@dimen/enambelas"
                 android:maxLines="1"
                 android:textSize="12sp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/alamat_lokasi"/>
+                android:text="@string/kosong"/>
 
             <View
                 android:layout_width="match_parent"
@@ -94,18 +103,19 @@
                 android:layout_height="wrap_content">
 
                 <androidx.appcompat.widget.AppCompatRatingBar
-                    android:clickable="false"
-                    android:numStars="5"
+                    android:id="@+id/rating_star"
+                    android:numStars="0"
                     style="@style/Widget.AppCompat.RatingBar.Small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
                 <TextView
+                    android:id="@+id/tv_rating_score"
                     android:layout_marginStart="@dimen/delapan"
                     android:textSize="12sp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/score_rating"/>
+                    android:text="@string/nol"/>
 
             </LinearLayout>
 
@@ -114,11 +124,12 @@
                 android:layout_height="16dp"/>
 
             <com.borjabravo.readmoretextview.ReadMoreTextView
+                android:id="@+id/tv_desc_lokasi"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/enambelas"
                 android:layout_marginEnd="@dimen/enambelas"
-                android:text="@string/lorem"
+                android:text="@string/kosong"
                 app:trimCollapsedText="@string/tampilkan"
                 app:trimExpandedText="@string/sembunyikan"
                 app:trimLength="300"
@@ -149,6 +160,7 @@
                     android:layout_height="wrap_content">
 
                     <TextView
+                        android:id="@+id/tv_hubungi_kami"
                         android:gravity="center_vertical"
                         android:padding="@dimen/enambelas"
                         android:layout_width="match_parent"
@@ -163,6 +175,7 @@
                         android:background="@color/grey"/>
 
                     <TextView
+                        android:id="@+id/tv_email_kami"
                         android:gravity="center_vertical"
                         android:padding="@dimen/enambelas"
                         android:layout_width="match_parent"
@@ -177,6 +190,7 @@
                         android:background="@color/grey"/>
 
                     <TextView
+                        android:id="@+id/tv_menuju_lokasi"
                         android:gravity="center_vertical"
                         android:padding="@dimen/enambelas"
                         android:layout_width="match_parent"
@@ -258,6 +272,7 @@
                 android:layout_height="wrap_content">
 
                 <LinearLayout
+                    android:visibility="gone"
                     android:padding="@dimen/enambelas"
                     android:orientation="vertical"
                     android:layout_width="match_parent"

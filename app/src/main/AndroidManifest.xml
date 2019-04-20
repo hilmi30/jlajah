@@ -38,7 +38,7 @@
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
         <!--KATEGORI LOKASI ACTIVITY-->
         <activity
-            android:name=".kategorilokasi.KategoriLokasiActivity"
+            android:name=".lokasibycategory.LokasiByCategoryActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
         <!--MAIN ACTIVITY-->

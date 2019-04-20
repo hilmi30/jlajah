@@ -2,10 +2,7 @@ package com.perumdajepara.jlajah.network
 
 import com.perumdajepara.jlajah.model.*
 import io.reactivex.Observable
-import retrofit2.http.Field
-import retrofit2.http.FormUrlEncoded
-import retrofit2.http.POST
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface ApiRepository {
     @FormUrlEncoded
@@ -50,4 +47,22 @@ interface ApiRepository {
         @Field("gender_id") genderId: Int,
         @Field("nomer_hp") nomerHp: String
     ): Observable<EditProfileModel>
+
+    @GET("categories/view")
+    fun getAllCategory(
+        @Query("code_language") codeLanguage: String
+    ): Observable<CategoryModel>
+
+    @GET("location/getlokasi")
+    fun getLokasiByCategory(
+        @Query("code_language") codeLanguage: String,
+        @Query("id_category") idCategory: Int,
+        @Query("page") page: Int
+    ): Observable<LokasiByCategoryModel>
+
+    @GET("location/getdetail")
+    fun getDetailLokasiById(
+        @Query("code_language") codeLanguage: String,
+        @Query("id_location") idLocation: Int
+    ): Observable<DetailLokasiModel>
 }

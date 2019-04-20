@@ -1,4 +1,4 @@
-package com.perumdajepara.jlajah.model
+package com.perumdajepara.jlajah.model.data
 
 data class Gender (
     var id: Int = 0,

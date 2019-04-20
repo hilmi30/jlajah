@@ -1,6 +1,7 @@
-package com.perumdajepara.jlajah.model
+package com.perumdajepara.jlajah.model.data
 
 import com.google.gson.annotations.SerializedName
+import com.perumdajepara.jlajah.model.data.Gender
 
 data class User (
     @SerializedName("username")

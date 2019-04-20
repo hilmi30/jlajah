@@ -47,8 +47,7 @@ class LoginPresenter: BasePresenter<LoginView> {
                 },
                 onError = {
                     if (it is HttpException) {
-                        val errorCode = it.code()
-                        when (errorCode) {
+                        when (it.code()) {
                             422 -> mView?.error(context.getString(R.string.username_password_salah))
                             else -> mView?.error(context.getString(R.string.terjadi_kesalahan))
                         }

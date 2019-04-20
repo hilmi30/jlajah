@@ -1,5 +1,6 @@
 package com.perumdajepara.jlajah.signup
 
+import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Patterns
 import android.widget.RadioButton
@@ -22,6 +23,7 @@ class SignupActivity : AppCompatActivity(), SignupView {
     private var rbWanita: RadioButton? = null
     private var nilaiGender = 1
     private var signupPresenter = SignupPresenter()
+    private lateinit var alertLoading: DialogInterface
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -164,7 +166,7 @@ class SignupActivity : AppCompatActivity(), SignupView {
     }
 
     override fun hideLoading() {
-        pb_signup.hilang()
+        alertLoading.dismiss()
     }
 
     override fun suksesRegister() {
@@ -177,11 +179,25 @@ class SignupActivity : AppCompatActivity(), SignupView {
     }
 
     override fun showLoading() {
-        pb_signup.terlihat()
+        alertLoading()
     }
 
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true
+    }
+
+    private fun alertLoading() {
+        alertLoading = alert {
+            isCancelable = false
+            customView {
+                verticalLayout {
+                    horizontalProgressBar {
+                        isIndeterminate = true
+                        padding = dip(32)
+                    }
+                }
+            }
+        }.show()
     }
 }

@@ -34,6 +34,7 @@ class LoginActivity : AppCompatActivity(), LoginView {
     private lateinit var edtPassBaru: AutoCompleteTextView
     private lateinit var edtUlangiPass: AutoCompleteTextView
     private lateinit var submitBtn: TextView
+    private lateinit var alertLoading: DialogInterface
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -187,11 +188,25 @@ class LoginActivity : AppCompatActivity(), LoginView {
     }
 
     override fun showLoading() {
-        pb_login.terlihat()
+        alertLoading()
     }
 
     override fun hideLoading() {
-        pb_login.hilang()
+        alertLoading.dismiss()
+    }
+
+    private fun alertLoading() {
+        alertLoading = alert {
+            isCancelable = false
+            customView {
+                verticalLayout {
+                    horizontalProgressBar {
+                        isIndeterminate = true
+                        padding = dip(32)
+                    }
+                }
+            }
+        }.show()
     }
 
     override fun error(msg: String) {

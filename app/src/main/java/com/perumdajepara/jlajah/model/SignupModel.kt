@@ -1,6 +1,7 @@
 package com.perumdajepara.jlajah.model
 
 import com.google.gson.annotations.SerializedName
+import com.perumdajepara.jlajah.model.data.User
 
 data class SignupModel (
     @SerializedName("status_code")

@@ -1,4 +1,4 @@
-package com.perumdajepara.jlajah.signup
+package com.perumdajepara.jlajah.lokasibycategory
 
 import android.content.Context
 import com.perumdajepara.jlajah.BuildConfig
@@ -15,13 +15,13 @@ import java.net.UnknownHostException
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.TimeoutException
 
-class SignupPresenter: BasePresenter<SignupView> {
+class LokasiByCategoryPresenter: BasePresenter<LokasiByCategoryView> {
 
-    private var mView: SignupView? = null
+    private var mView: LokasiByCategoryView? = null
     private val services = RetrofitBuilder.getInstance(BuildConfig.BASE_URL_API).create(ApiRepository::class.java)
     private var disposable: Disposable? = null
 
-    override fun onAttach(view: SignupView) {
+    override fun onAttach(view: LokasiByCategoryView) {
         mView = view
     }
 
@@ -33,44 +33,28 @@ class SignupPresenter: BasePresenter<SignupView> {
         disposable?.dispose()
     }
 
-    fun signup(
-        username: String,
-        email: String,
-        password: String,
-        nama: String,
-        noTelp: String,
-        nilaiGender: Int,
-        context: Context
-    ) {
-        mView?.showLoading()
-        disposable = services.signup(username, email, password, nama, noTelp, nilaiGender)
+    fun getLokasiByCategory(context: Context, codeLang: String, idCategory: Int, page: Int) {
+        mView?.showLokasiLoading()
+
+        disposable = services.getLokasiByCategory(codeLang, idCategory, page)
             .debounce(100, TimeUnit.MILLISECONDS)
             .timeout(10, TimeUnit.SECONDS)
             .subscribeOn(Schedulers.newThread())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeBy(
                 onNext = {
-                    if (it.statusCode == 200) {
-                        mView?.suksesRegister()
-                        mView?.hideLoading()
-                    }
+                    mView?.showData(it.items)
+                    mView?.totalPage(it.pageCount)
                 },
                 onError = {
-                    if (it is HttpException) {
-                        when (it.code()) {
-                            422 -> mView?.error(context.getString(R.string.username_email_ada))
-                            else -> mView?.error(context.getString(R.string.terjadi_kesalahan))
-                        }
-                    }
-
+                    if (it is HttpException) mView?.error(context.getString(R.string.terjadi_kesalahan))
                     if (it is UnknownHostException || it is TimeoutException) mView?.error(context.getString(R.string.cek_koneksi))
-                    mView?.hideLoading()
+                    mView?.hideLokasiLoading()
                 },
                 onComplete = {
-                    mView?.hideLoading()
+                    mView?.hideLokasiLoading()
                 }
             )
     }
-
 
 }

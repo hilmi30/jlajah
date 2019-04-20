@@ -13,10 +13,6 @@ fun View.terlihat() {
     visibility = View.VISIBLE
 }
 
-fun View.takterlihat() {
-    visibility = View.INVISIBLE
-}
-
 fun View.hilang() {
     visibility = View.GONE
 }
@@ -29,7 +25,7 @@ fun setLocale(context: Context, lang: String) {
     context.resources.updateConfiguration(config, context.resources.displayMetrics)
 
     // simpan bahasa
-    context.getSharedPreferences(ConstantVariable.lang, Context.MODE_PRIVATE).edit().apply {
+    context.getSharedPreferences(ConstantVariable.userPref, Context.MODE_PRIVATE).edit().apply {
         putString(ConstantVariable.myLang, lang)
         apply()
     }
