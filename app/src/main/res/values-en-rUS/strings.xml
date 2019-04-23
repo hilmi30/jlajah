@@ -1,21 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Jlajah</string>
     <string name="beranda">Home</string>
     <string name="akun">Account</string>
     <string name="bookmark">Bookmark</string>
     <string name="peta">Map</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="cari_lokasi">Search Location</string>
-    <string name="image_description">Image Description</string>
     <string name="kategori">Category</string>
     <string name="lokasi_populer">Popular Locations</string>
-    <string name="title">title</string>
     <string name="alamat_lokasi">location address</string>
-    <string name="score_rating">5.0</string>
     <string name="nama_lokasi">Location Name</string>
     <string name="tampilkan">Show</string>
-    <string name="lorem">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</string>
     <string name="informasi_kontak">Contact Information</string>
     <string name="hubungi_kami">Contact Us</string>
     <string name="email_kami">Email Us</string>
@@ -26,16 +20,11 @@
     <string name="masukkan_rating">Enter Rating</string>
     <string name="masukkan_review">Enter Review</string>
     <string name="sembunyikan">Hide</string>
-    <string name="submit">SUBMIT</string>
-    <string name="tanggal_review">30/12/2019 19:30</string>
     <string name="review_anda">Your Review</string>
     <string name="edit_review_anda">Edit your review</string>
     <string name="tulis_ulasan">Write a Review</string>
-    <string name="posting">POSTING</string>
     <string name="nama_user">USERNAME</string>
     <string name="data_diri">Personal Data</string>
-    <string name="email_account">email@email.com</string>
-    <string name="kosong">-</string>
     <string name="bahasa">Language</string>
     <string name="ganti_password">Change Password</string>
     <string name="simpan">SAVE</string>
@@ -46,21 +35,16 @@
     <string name="ya">Yes</string>
     <string name="geser_kiri_kanan">Swipe items left or right to delete from the bookmark list</string>
     <string name="share">Share</string>
-    <string name="unbookmark">Unbookmark</string>
-    <string name="email">Email</string>
-    <string name="password">Password</string>
     <string name="lupa_password">Forgot the password?</string>
     <string name="masuk">Login</string>
     <string name="daftar">Signup</string>
     <string name="nama_lengkap">Full Name</string>
     <string name="no_telepon">Phone Number</string>
-    <string name="gender">Gender</string>
     <string name="pria">Male</string>
     <string name="ulangi_password">Repeat Password</string>
     <string name="wanita">Female</string>
     <string name="pilih">Choose</string>
     <string name="batal">Cancel</string>
-    <string name="username">Username</string>
     <string name="username_kosong">username cannot be blank</string>
     <string name="email_kosong">email cannot be blank</string>
     <string name="password_kosong">password cannot be blank</string>
@@ -90,4 +74,6 @@
     <string name="email_tidak_ditemukan">Email not found</string>
     <string name="lupa_pass_cek_email">Successful password reset request, please check your email for activation</string>
     <string name="tutup">Close</string>
+    <string name="tidak_ada_ulasan">No Review</string>
+    <string name="review_ditambah">Review added successfully</string>
 </resources>
