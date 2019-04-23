@@ -57,7 +57,8 @@ interface ApiRepository {
     fun getLokasiByCategory(
         @Query("code_language") codeLanguage: String,
         @Query("id_category") idCategory: Int,
-        @Query("page") page: Int
+        @Query("page") page: Int,
+        @Query("per_page") perPage: Int
     ): Observable<LokasiByCategoryModel>
 
     @GET("location/getdetail")
@@ -65,4 +66,26 @@ interface ApiRepository {
         @Query("code_language") codeLanguage: String,
         @Query("id_location") idLocation: Int
     ): Observable<DetailLokasiModel>
+
+    @GET("review/getreview")
+    fun getReviewByUser(
+        @Query("id_location") idLocation: Int,
+        @Query("access-token") accessToken: String
+    ): Observable<ReviewModel>
+
+    @FormUrlEncoded
+    @POST("review/create")
+    fun addReview(
+        @Query("id_location") IdLocation: Int,
+        @Query("access-token") accessToken: String,
+        @Field("review") review: String,
+        @Field("rating_star") ratingStar: Int
+    ): Observable<AddReviewModel>
+
+    @GET("review/getallreview")
+    fun getAllReview(
+        @Query("id_location") idLocation: Int,
+        @Query("page") page: Int,
+        @Query("per_page") perPage: Int
+    ): Observable<AllReviewModel>
 }

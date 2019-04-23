@@ -54,4 +54,30 @@ class DetailLokasiPresenter: BasePresenter<DetailLokasiView> {
                 }
             )
     }
+
+    fun getReviewByUser(context: Context, idLocation: Int, accessToken: String) {
+        mView?.showReviewLoading()
+        disposable = services.getReviewByUser(idLocation, accessToken)
+            .debounce(100, TimeUnit.MILLISECONDS)
+            .timeout(10, TimeUnit.SECONDS)
+            .subscribeOn(Schedulers.newThread())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeBy(
+                onNext = {
+                    when (it.status) {
+                        1 -> mView?.showReview(it.data)
+                        0 -> mView?.hideReview()
+                        else -> mView?.error(context.getString(R.string.terjadi_kesalahan))
+                    }
+                },
+                onError = {
+                    if (it is HttpException) mView?.error(context.getString(R.string.terjadi_kesalahan))
+                    if (it is UnknownHostException || it is TimeoutException) mView?.error(context.getString(R.string.cek_koneksi))
+                    mView?.hideReviewLoading()
+                },
+                onComplete = {
+                    mView?.hideReviewLoading()
+                }
+            )
+    }
 }

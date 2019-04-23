@@ -236,6 +236,7 @@
                 android:layout_height="@dimen/tigadua"/>
 
             <TextView
+                android:id="@+id/tv_lihat_ulasan"
                 android:textAllCaps="true"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -251,7 +252,14 @@
                 android:layout_height="1dp"
                 android:background="@android:color/darker_gray"/>
 
+            <ProgressBar
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:id="@+id/pb_review"/>
+
             <androidx.appcompat.widget.AppCompatButton
+                android:visibility="gone"
                 android:id="@+id/btn_tulis_ulasan"
                 android:layout_marginStart="@dimen/enambelas"
                 android:layout_marginEnd="@dimen/enambelas"
@@ -263,6 +271,8 @@
                 android:text="@string/tulis_ulasan"/>
 
             <androidx.cardview.widget.CardView
+                android:visibility="gone"
+                android:id="@+id/cv_ulasan"
                 android:layout_marginStart="@dimen/enambelas"
                 android:layout_marginEnd="@dimen/enambelas"
                 android:layout_marginBottom="@dimen/enambelas"
@@ -272,7 +282,6 @@
                 android:layout_height="wrap_content">
 
                 <LinearLayout
-                    android:visibility="gone"
                     android:padding="@dimen/enambelas"
                     android:orientation="vertical"
                     android:layout_width="match_parent"
@@ -294,12 +303,14 @@
                         android:layout_height="wrap_content">
 
                         <androidx.appcompat.widget.AppCompatRatingBar
+                            android:id="@+id/rating_review"
                             style="@style/Widget.AppCompat.RatingBar.Small"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:numStars="5" />
 
                         <TextView
+                            android:id="@+id/tv_waktu_review"
                             android:layout_marginStart="16dp"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -312,6 +323,7 @@
                         android:layout_height="@dimen/delapan"/>
 
                     <TextView
+                        android:id="@+id/tv_deskripsi_review"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/lorem"/>
@@ -321,6 +333,7 @@
                         android:layout_height="@dimen/enambelas"/>
 
                     <TextView
+                        android:id="@+id/tv_edit_ulasan"
                         android:textColor="@color/colorPrimary"
                         android:textStyle="bold"
                         android:layout_width="match_parent"

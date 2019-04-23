@@ -3,26 +3,28 @@ package com.perumdajepara.jlajah.util
 class ConstantVariable {
     companion object {
         // database name
-        var dbName = "jlajah"
+        const val dbName = "jlajah"
 
         // nama sharedpreferences
-        var userPref = "userPref"
-        var lang = "lang"
+        const val userPref = "userPref"
+        const val lang = "lang"
 
         // nama item sharepreferences
-        var status = "status"
-        var nomerHp = "nomerHp"
-        var gender = "gender"
-        var genderId = "genderId"
-        var fullName = "fullName"
-        var accessToken = "accessToken"
-        var email = "email"
-        var username = "username"
-        var id = "id"
-        var myLang = "myLang"
+        const val status = "status"
+        const val nomerHp = "nomerHp"
+        const val gender = "gender"
+        const val genderId = "genderId"
+        const val fullName = "fullName"
+        const val accessToken = "accessToken"
+        const val email = "email"
+        const val username = "username"
+        const val id = "id"
+        const val myLang = "myLang"
 
         // variabel lain
-        var nameCategory = "nameCategory"
+        const val nameCategory = "nameCategory"
+        const val review = "review"
+        const val rating = "rating"
     }
 }
 

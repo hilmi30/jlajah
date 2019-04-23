@@ -93,4 +93,6 @@
     <string name="lupa_pass_cek_email">Permintaan reset password berhasil, silahkan cek email anda untuk aktivasi</string>
     <string name="tutup">Tutup</string>
     <string name="nol">0.0</string>
+    <string name="tidak_ada_ulasan">Tidak ada ulasan</string>
+    <string name="review_ditambah">Review berhasil ditambah</string>
 </resources>

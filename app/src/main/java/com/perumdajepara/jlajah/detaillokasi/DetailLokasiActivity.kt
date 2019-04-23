@@ -8,8 +8,10 @@ import android.os.Bundle
 import android.view.Menu
 import androidx.appcompat.app.AppCompatActivity
 import com.perumdajepara.jlajah.R
+import com.perumdajepara.jlajah.allreview.AllReviewActivity
 import com.perumdajepara.jlajah.model.DetailLokasiModel
 import com.perumdajepara.jlajah.model.data.LokasiImage
+import com.perumdajepara.jlajah.model.data.Review
 import com.perumdajepara.jlajah.ulasan.UlasanActivity
 import com.perumdajepara.jlajah.util.ConstantVariable
 import com.perumdajepara.jlajah.util.hilang
@@ -27,6 +29,10 @@ class DetailLokasiActivity : AppCompatActivity(), DetailLokasiView {
     private lateinit var imageAdapter: ImageSliderAdapter
     private lateinit var alertLoading: DialogInterface
 
+    private var userId = 0
+    private var idLokasi = 0
+    private lateinit var accessToken: String
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail_lokasi)
@@ -42,14 +48,38 @@ class DetailLokasiActivity : AppCompatActivity(), DetailLokasiView {
             setDisplayHomeAsUpEnabled(true)
         }
 
-        val idLokasi = intent.getIntExtra(ConstantVariable.id, 1)
-        val codeLang = getSharedPreferences(ConstantVariable.userPref, Context.MODE_PRIVATE)
-            .getString(ConstantVariable.myLang, "in")
+        idLokasi = intent.getIntExtra(ConstantVariable.id, 0)
+        // userpref
+        val userPref = getSharedPreferences(ConstantVariable.userPref, Context.MODE_PRIVATE)
+        // item user pref
+        val codeLang = userPref.getString(ConstantVariable.myLang, "in")
+        userId = userPref.getInt(ConstantVariable.id, 0)
+        accessToken = userPref.getString(ConstantVariable.accessToken, "") as String
 
         detailLokasiPresenter.getDetailLokasi(this, codeLang as String, idLokasi)
+        detailLokasiPresenter.getReviewByUser(this, idLokasi, accessToken)
 
         btn_tulis_ulasan.onClick {
-            startActivity<UlasanActivity>()
+            startActivity<UlasanActivity>(
+                ConstantVariable.id to idLokasi,
+                ConstantVariable.review to "",
+                ConstantVariable.rating to 1
+            )
+        }
+
+        tv_edit_ulasan.onClick {
+            startActivity<UlasanActivity>(
+                ConstantVariable.id to idLokasi,
+                ConstantVariable.review to tv_deskripsi_review.text.toString(),
+                ConstantVariable.rating to rating_review.rating.toInt()
+            )
+        }
+
+        tv_lihat_ulasan.onClick {
+            startActivity<AllReviewActivity>(
+                ConstantVariable.id to idLokasi,
+                ConstantVariable.fullName to tv_nama_lokasi.text.toString()
+            )
         }
 
         imageAdapter = ImageSliderAdapter(imageData)
@@ -141,6 +171,27 @@ class DetailLokasiActivity : AppCompatActivity(), DetailLokasiView {
         }.show()
     }
 
+    override fun showReviewLoading() {
+        pb_review.terlihat()
+    }
+
+    override fun hideReviewLoading() {
+        pb_review.hilang()
+    }
+
+    override fun showReview(data: Review) {
+        cv_ulasan.terlihat()
+        btn_tulis_ulasan.hilang()
+        rating_review.rating = data.ratingStar.toFloat()
+        tv_deskripsi_review.text = data.review
+        tv_waktu_review.text = data.updatedAt
+    }
+
+    override fun hideReview() {
+        cv_ulasan.hilang()
+        btn_tulis_ulasan.terlihat()
+    }
+
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_detail_lokasi, menu)
         return true
@@ -149,5 +200,12 @@ class DetailLokasiActivity : AppCompatActivity(), DetailLokasiView {
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        cv_ulasan.hilang()
+        btn_tulis_ulasan.hilang()
+        detailLokasiPresenter.getReviewByUser(this, idLokasi, accessToken)
     }
 }

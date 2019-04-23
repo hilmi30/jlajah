@@ -28,6 +28,7 @@ class LokasiByCategoryActivity : AppCompatActivity(), LokasiByCategoryView {
 
     private var startPage = 1
     private var pageCount = 0
+    private val perPage = 10
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,11 +53,11 @@ class LokasiByCategoryActivity : AppCompatActivity(), LokasiByCategoryView {
 
         adapterKategoriLokasi = LokasiByCategoryAdapter(dataLokasi) {
             startActivity<DetailLokasiActivity>(
-                ConstantVariable.id to it.id
+                ConstantVariable.id to it.id.toInt()
             )
         }
 
-        kategoriLokasiPresenter.getLokasiByCategory(this, codeLang as String, idCategory, startPage)
+        kategoriLokasiPresenter.getLokasiByCategory(this, codeLang as String, idCategory, startPage, perPage)
 
         rv_kategori_lokasi.apply {
             adapter = adapterKategoriLokasi
@@ -65,9 +66,9 @@ class LokasiByCategoryActivity : AppCompatActivity(), LokasiByCategoryView {
                 override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                     super.onScrollStateChanged(recyclerView, newState)
 
-                    if (!recyclerView.canScrollVertically(1) && startPage <= pageCount) {
+                    if (!recyclerView.canScrollVertically(1) && startPage <= pageCount && pageCount != 1) {
                         startPage = startPage.plus(1)
-                        kategoriLokasiPresenter.getLokasiByCategory(this@LokasiByCategoryActivity, codeLang, idCategory, startPage)
+                        kategoriLokasiPresenter.getLokasiByCategory(this@LokasiByCategoryActivity, codeLang, idCategory, startPage, perPage)
                     }
                 }
             })
