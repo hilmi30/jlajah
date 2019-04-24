@@ -39,7 +39,6 @@ dependencies {
     implementation "org.jetbrains.anko:anko:0.10.8"
     implementation 'com.borjabravo:readmoretextview:2.1.0'
     implementation 'com.github.JakeWharton:ViewPagerIndicator:2.4.1'
-
     // RETROFIT
     implementation 'com.squareup.okhttp3:okhttp:3.11.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
@@ -52,10 +51,12 @@ dependencies {
     implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
     // SQL Lite Library
     implementation 'com.hinl:kotlindatabasehelper:1.0.0'
-
     // Picasso
     implementation 'com.squareup.picasso:picasso:2.71828'
     // Infinite Scroll
     implementation 'com.github.pwittchen:infinitescroll:0.0.2'
     implementation 'github.frosquivel:infinitescroll:1.0.0'
+    // Google Maps
+    implementation 'com.google.android.gms:play-services-maps:16.1.0'
+    implementation 'com.google.maps.android:android-maps-utils:0.5+'
 }
