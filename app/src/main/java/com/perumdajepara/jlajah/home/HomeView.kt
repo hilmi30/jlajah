@@ -5,7 +5,7 @@ import com.perumdajepara.jlajah.model.data.Category
 
 interface HomeView: BaseView {
     fun showCategoryLoading()
-    fun error(msg: String)
+    fun errorKategori(msg: String)
     fun hideCategoryLoading()
     fun showData(data: List<Category>)
 }

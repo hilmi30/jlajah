@@ -76,4 +76,8 @@
     <string name="tutup">Close</string>
     <string name="tidak_ada_ulasan">No Review</string>
     <string name="review_ditambah">Review added successfully</string>
+    <string name="akses_ditolak">Access Denied</string>
+    <string name="coba_lagi">try again</string>
+    <string name="terdekat">Closest</string>
+    <string name="filter">Location Filter</string>
 </resources>

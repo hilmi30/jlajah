@@ -23,7 +23,7 @@ class SplashActivity : AppCompatActivity() {
         val userPref = getSharedPreferences(ConstantVariable.userPref, Context.MODE_PRIVATE)
         // get item userpref
         val status = userPref.getBoolean(ConstantVariable.status, false)
-        val lang = userPref.getString(ConstantVariable.myLang, "in")
+        val lang = userPref.getString(ConstantVariable.myLang, ConstantVariable.indonesia)
 
         // set bahasa
         setLocale(this, lang as String)

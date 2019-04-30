@@ -6,10 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.perumdajepara.jlajah.R
 import com.perumdajepara.jlajah.model.data.Review
-import com.perumdajepara.jlajah.util.ConstantVariable
-import com.perumdajepara.jlajah.util.hilang
-import com.perumdajepara.jlajah.util.showAlert
-import com.perumdajepara.jlajah.util.terlihat
+import com.perumdajepara.jlajah.util.*
 import kotlinx.android.synthetic.main.activity_all_review.*
 
 class AllReviewActivity : AppCompatActivity(), AllReviewView {
@@ -54,6 +51,7 @@ class AllReviewActivity : AppCompatActivity(), AllReviewView {
         rv_all_review.apply {
             layoutManager = linearLayout
             adapter = reviewAdapter
+            addItemDecoration(ItemDecoration(32))
             addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                     super.onScrollStateChanged(recyclerView, newState)

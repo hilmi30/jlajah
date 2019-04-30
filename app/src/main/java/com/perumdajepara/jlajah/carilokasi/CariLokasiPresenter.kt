@@ -1,4 +1,4 @@
-package com.perumdajepara.jlajah.lokasibycategory
+package com.perumdajepara.jlajah.carilokasi
 
 import android.content.Context
 import com.perumdajepara.jlajah.BuildConfig
@@ -10,18 +10,19 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
+import org.intellij.lang.annotations.Language
 import retrofit2.HttpException
 import java.net.UnknownHostException
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.TimeoutException
 
-class LokasiByCategoryPresenter: BasePresenter<LokasiByCategoryView> {
+class CariLokasiPresenter: BasePresenter<CariLokasiView> {
 
-    private var mView: LokasiByCategoryView? = null
+    private var mView: CariLokasiView? = null
     private val services = RetrofitBuilder.getInstance(BuildConfig.BASE_URL_API).create(ApiRepository::class.java)
     private var disposable: Disposable? = null
 
-    override fun onAttach(view: LokasiByCategoryView) {
+    override fun onAttach(view: CariLokasiView) {
         mView = view
     }
 
@@ -33,34 +34,10 @@ class LokasiByCategoryPresenter: BasePresenter<LokasiByCategoryView> {
         disposable?.dispose()
     }
 
-    fun getLokasiByCategory(context: Context, codeLang: String, idCategory: Int, page: Int, perPage: Int) {
-        mView?.showLokasiLoading()
-
-        disposable = services.getLokasiByCategory(codeLang, idCategory, page, perPage)
-            .debounce(100, TimeUnit.MILLISECONDS)
-            .timeout(10, TimeUnit.SECONDS)
-            .subscribeOn(Schedulers.newThread())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribeBy(
-                onNext = {
-                    mView?.showData(it.items)
-                    mView?.totalPage(it.pageCount)
-                },
-                onError = {
-                    if (it is HttpException) mView?.error(context.getString(R.string.terjadi_kesalahan))
-                    if (it is UnknownHostException || it is TimeoutException) mView?.cekKoneksi(context.getString(R.string.cek_koneksi))
-                    mView?.hideLokasiLoading()
-                },
-                onComplete = {
-                    mView?.hideLokasiLoading()
-                }
-            )
-    }
-
-    fun cariLokasi(context: Context, codeLanguage: String, key: String, page: Int, perPage: Int, sort: String, category: Int) {
-        mView?.showLokasiLoading()
+    fun cariLokasi(context: Context, codeLanguage: String, key: String, page: Int, perPage: Int, sort: String) {
+        mView?.showLoading()
         disposable = services.cariLokasi(
-            category = category,
+            category = 0,
             codeLanguage = codeLanguage,
             key = key,
             page = page,
@@ -89,10 +66,10 @@ class LokasiByCategoryPresenter: BasePresenter<LokasiByCategoryView> {
                     }
 
                     if (it is UnknownHostException || it is TimeoutException) mView?.cekKoneksi(context.getString(R.string.cek_koneksi))
-                    mView?.showLokasiLoading()
+                    mView?.hideLoading()
                 },
                 onComplete = {
-                    mView?.showLokasiLoading()
+                    mView?.hideLoading()
                 }
             )
     }

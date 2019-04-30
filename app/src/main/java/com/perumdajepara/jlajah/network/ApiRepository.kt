@@ -59,7 +59,7 @@ interface ApiRepository {
         @Query("id_category") idCategory: Int,
         @Query("page") page: Int,
         @Query("per_page") perPage: Int
-    ): Observable<LokasiByCategoryModel>
+    ): Observable<LokasiModel>
 
     @GET("location/getdetail")
     fun getDetailLokasiById(
@@ -88,4 +88,14 @@ interface ApiRepository {
         @Query("page") page: Int,
         @Query("per_page") perPage: Int
     ): Observable<AllReviewModel>
+
+    @GET("search/search")
+    fun cariLokasi(
+        @Query("category") category: Int,
+        @Query("code_language") codeLanguage: String,
+        @Query("key") key: String,
+        @Query("page") page: Int,
+        @Query("per-page") perPage: Int,
+        @Query("sort") sort: String
+    ): Observable<LokasiModel>
 }

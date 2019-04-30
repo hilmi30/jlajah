@@ -11,13 +11,6 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <ImageView
-            android:contentDescription="@string/image_description"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:src="@drawable/jlajah"
-            android:padding="16dp"/>
-
         <androidx.cardview.widget.CardView
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
@@ -27,17 +20,35 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <androidx.appcompat.widget.AppCompatAutoCompleteTextView
-                android:textSize="14sp"
-                android:inputType="text"
-                android:drawableStart="@drawable/ic_search_black_24dp"
-                android:drawableEnd="@drawable/filter"
-                android:drawablePadding="16dp"
-                android:padding="16dp"
-                android:background="@drawable/edt_nothing"
+            <LinearLayout
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/cari_lokasi"/>
+                android:layout_height="wrap_content">
+
+                <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                    android:id="@+id/edt_cari_lokasi"
+                    android:textSize="14sp"
+                    android:inputType="text"
+                    android:drawableStart="@drawable/jlajah"
+                    android:drawablePadding="24dp"
+                    android:padding="16dp"
+                    android:background="@drawable/edt_nothing"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/cari_lokasi"
+                    android:layout_weight="1"/>
+
+                <ImageView
+                    android:padding="8dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="6"
+                    android:id="@+id/imgbtn_filter"
+                    android:contentDescription="@string/image_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/filter"/>
+
+            </LinearLayout>
 
         </androidx.cardview.widget.CardView>
 
@@ -61,14 +72,50 @@
                 android:id="@+id/pb_kategori"/>
 
             <androidx.recyclerview.widget.RecyclerView
-                android:padding="8dp"
                 android:id="@+id/rv_kategori"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
             </androidx.recyclerview.widget.RecyclerView>
 
+            <LinearLayout
+                android:visibility="gone"
+                android:id="@+id/lyt_error_kategori"
+                android:padding="16dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tv_msg_no_koneksi"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/cek_koneksi"
+                    android:layout_weight="1"/>
+
+                <TextView
+                    android:id="@+id/tv_coba_lagi"
+                    android:textColor="@color/colorPrimary"
+                    android:textStyle="bold"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="end"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/coba_lagi"
+                    android:textAllCaps="true"
+                    android:layout_weight="3" />
+
+            </LinearLayout>
+
         </androidx.cardview.widget.CardView>
+
+        <View
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="1dp"
+            android:background="@color/maybeDarkGrey"/>
 
         <TextView
             android:layout_marginTop="@dimen/enambelas"

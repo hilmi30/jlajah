@@ -76,4 +76,8 @@
     <string name="tutup">Tutup</string>
     <string name="tidak_ada_ulasan">Tidak ada review</string>
     <string name="review_ditambah">Ulasan berhasil ditambah</string>
+    <string name="akses_ditolak">Akses Ditolak</string>
+    <string name="coba_lagi">coba lagi</string>
+    <string name="terdekat">Terdekat</string>
+    <string name="filter">Filter Lokasi</string>
 </resources>

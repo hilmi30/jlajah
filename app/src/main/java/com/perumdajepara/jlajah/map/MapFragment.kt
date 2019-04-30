@@ -1,6 +1,8 @@
 package com.perumdajepara.jlajah.map
 
 
+import android.Manifest
+import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -18,6 +20,10 @@ import com.perumdajepara.jlajah.R
 import kotlinx.android.synthetic.main.fragment_map.*
 import com.google.android.gms.maps.model.Circle
 import com.google.maps.android.SphericalUtil
+import com.nabinbhandari.android.permissions.PermissionHandler
+import com.nabinbhandari.android.permissions.Permissions
+import org.jetbrains.anko.support.v4.alert
+import org.jetbrains.anko.support.v4.ctx
 
 class MapFragment : Fragment(), OnMapReadyCallback {
 
@@ -65,6 +71,28 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
             marker.isVisible = SphericalUtil.computeDistanceBetween(center, marker.position) < 400
         }
+    }
+
+    private fun izinLokasi() {
+        Permissions.check(ctx, Manifest.permission.ACCESS_FINE_LOCATION, null, object: PermissionHandler() {
+            override fun onGranted() {
+
+            }
+
+            override fun onDenied(context: Context?, deniedPermissions: java.util.ArrayList<String>?) {
+                super.onDenied(context, deniedPermissions)
+                alert {
+                    title = getString(R.string.akses_ditolak)
+                    message = "Diperlukan izin akses lokasi anda"
+                    negativeButton(R.string.tutup) {
+                        it.dismiss()
+                    }
+                    positiveButton("Izinkan") {
+                        izinLokasi()
+                    }
+                }.show()
+            }
+        })
     }
 
     data class Places (

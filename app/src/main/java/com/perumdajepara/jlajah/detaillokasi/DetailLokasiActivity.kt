@@ -82,6 +82,11 @@ class DetailLokasiActivity : AppCompatActivity(), DetailLokasiView {
             )
         }
 
+        swipe_detail_lokasi.setOnRefreshListener {
+            detailLokasiPresenter.getDetailLokasi(this, codeLang, idLokasi)
+            detailLokasiPresenter.getReviewByUser(this, idLokasi, accessToken)
+        }
+
         imageAdapter = ImageSliderAdapter(imageData)
         pager_detail_lokasi.adapter = imageAdapter
 
@@ -105,6 +110,7 @@ class DetailLokasiActivity : AppCompatActivity(), DetailLokasiView {
 
     override fun error(msg: String) {
         showAlert(this, msg)
+        swipe_detail_lokasi.isRefreshing = false
     }
 
     override fun showLoading() {
@@ -115,6 +121,7 @@ class DetailLokasiActivity : AppCompatActivity(), DetailLokasiView {
     override fun hideLoading() {
         pb_lokasi_image.hilang()
         alertLoading.dismiss()
+        swipe_detail_lokasi.isRefreshing = false
     }
 
     override fun showData(it: DetailLokasiModel) {
@@ -127,8 +134,8 @@ class DetailLokasiActivity : AppCompatActivity(), DetailLokasiView {
         val data = it.data[0]
         tv_nama_lokasi.text = data.locationName
         tv_alamat_lokasi.text = data.alamat
-        rating_star.rating = data.ratingStar.toFloat()
-        tv_rating_score.text = data.ratingScore.toFloat().toString()
+        rating_star.rating = it.ratingScore
+        tv_rating_score.text = it.ratingScore.toString()
         tv_desc_lokasi.text = data.desc
 
         // set data kontak

@@ -17,7 +17,6 @@ import com.perumdajepara.jlajah.login.LoginActivity
 import com.perumdajepara.jlajah.main.MainActivity
 import com.perumdajepara.jlajah.model.EditProfileModel
 import com.perumdajepara.jlajah.util.*
-import com.perumdajepara.jlajah.util.ConstantVariable.Companion.lang
 import kotlinx.android.synthetic.main.fragment_account.*
 import org.jetbrains.anko.*
 import org.jetbrains.anko.sdk27.coroutines.onClick
@@ -76,10 +75,10 @@ class AccountFragment : Fragment(), AccountView {
         // get item userpref
         userToken = userPref.getString(ConstantVariable.accessToken, "") as String
         userId = userPref.getInt(ConstantVariable.id, 0)
-        lang = userPref.getString(ConstantVariable.myLang, "in") as String
+        lang = userPref.getString(ConstantVariable.myLang, ConstantVariable.indonesia) as String
 
         // cek bahasa default
-        tv_bahasa.text = if (lang == "in") getString(R.string.indonesia) else getString(R.string.english)
+        tv_bahasa.text = if (lang == ConstantVariable.indonesia) getString(R.string.indonesia) else getString(R.string.english)
 
         tv_logout.onClick {
             alert {
@@ -239,13 +238,13 @@ class AccountFragment : Fragment(), AccountView {
                     radioGroup {
                         rbIndo = radioButton {
                             text = getString(R.string.indonesia)
-                            tag = "in"
+                            tag = ConstantVariable.indonesia
                         }.lparams {
                             bottomMargin = dip(16)
                         }
                         rbEng = radioButton {
                             text = getString(R.string.english)
-                            tag = "en"
+                            tag = ConstantVariable.english
                         }
 
                         check(if (lang == rbIndo.tag) rbIndo.id else rbEng.id)

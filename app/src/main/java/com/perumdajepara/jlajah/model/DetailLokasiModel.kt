@@ -15,5 +15,8 @@ data class DetailLokasiModel (
     var data: List<Lokasi> = listOf(),
 
     @SerializedName("image")
-    var image: List<LokasiImage> = listOf()
+    var image: List<LokasiImage> = listOf(),
+
+    @SerializedName("rating_score")
+    var ratingScore: Float = 0.0F
 )

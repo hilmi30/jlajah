@@ -46,8 +46,8 @@ class HomePresenter: BasePresenter<HomeView> {
                     mView?.hideCategoryLoading()
                 },
                 onError = {
-                    if (it is HttpException) mView?.error(context.getString(R.string.terjadi_kesalahan))
-                    if (it is UnknownHostException || it is TimeoutException) mView?.error(context.getString(R.string.cek_koneksi))
+                    if (it is HttpException) mView?.errorKategori(context.getString(R.string.terjadi_kesalahan))
+                    if (it is UnknownHostException || it is TimeoutException) mView?.errorKategori(context.getString(R.string.cek_koneksi))
 
                     mView?.hideCategoryLoading()
                 },

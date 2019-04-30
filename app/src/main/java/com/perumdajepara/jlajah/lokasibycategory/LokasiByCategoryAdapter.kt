@@ -7,13 +7,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.perumdajepara.jlajah.R
 import com.perumdajepara.jlajah.model.data.Lokasi
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.item_kategori_lokasi.view.*
+import kotlinx.android.synthetic.main.item_lokasi_by_kategori.view.*
 import org.jetbrains.anko.sdk27.coroutines.onClick
 
 class LokasiByCategoryAdapter(private val data: List<Lokasi>, private val listener: (Lokasi) -> Unit)
     : RecyclerView.Adapter<LokasiByCategoryAdapter.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_kategori_lokasi, parent, false))
+        return ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_lokasi_by_kategori, parent, false))
     }
 
     override fun getItemCount(): Int = data.size

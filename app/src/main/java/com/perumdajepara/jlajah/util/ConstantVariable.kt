@@ -7,7 +7,6 @@ class ConstantVariable {
 
         // nama sharedpreferences
         const val userPref = "userPref"
-        const val lang = "lang"
 
         // nama item sharepreferences
         const val status = "status"
@@ -25,6 +24,15 @@ class ConstantVariable {
         const val nameCategory = "nameCategory"
         const val review = "review"
         const val rating = "rating"
+        const val myReview = "myReview"
+        const val gantiReview = "gantiReview"
+        const val namaLokasi = "namaLokasi"
+        const val ascending = "az"
+        const val descending = "za"
+        const val dekat = "dekat"
+        const val indonesia = "in"
+        const val english = "en"
+        const val filterTag = "filterTag"
     }
 }
 

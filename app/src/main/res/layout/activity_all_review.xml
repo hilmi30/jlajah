@@ -37,7 +37,6 @@
         android:layout_height="match_parent">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:paddingBottom="8dp"
             android:id="@+id/rv_all_review"
             android:layout_width="match_parent"
             android:layout_height="match_parent">

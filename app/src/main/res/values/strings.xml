@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name" translatable="false" templateMergeStrategy="preserve">Jlajah</string>
+    <string name="app_name" templateMergeStrategy="preserve" translatable="false">Jlajah</string>
     <string name="maps_api_key" translatable="false">AIzaSyCLLJVejWLlFlB1NvA6iJ4KYDzQdplbkO4</string>
     <string name="beranda">Beranda</string>
     <string name="akun">Akun</string>
@@ -96,4 +96,10 @@
     <string name="nol" translatable="false">0.0</string>
     <string name="tidak_ada_ulasan">Tidak ada ulasan</string>
     <string name="review_ditambah">Ulasan berhasil ditambah</string>
+    <string name="akses_ditolak">Akses Ditolak</string>
+    <string name="coba_lagi">coba lagi</string>
+    <string name="filter">Filter Lokasi</string>
+    <string name="ascending" translatable="false">A-Z (Ascending)</string>
+    <string name="descending" translatable="false">Z-A (Descending)</string>
+    <string name="terdekat">Terdekat</string>
 </resources>

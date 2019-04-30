@@ -22,7 +22,7 @@
                 android:layout_centerInParent="true"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:src="@drawable/jlajah_white_1"/>
+                android:src="@drawable/jlajah_logo_white"/>
 
         </RelativeLayout>
 

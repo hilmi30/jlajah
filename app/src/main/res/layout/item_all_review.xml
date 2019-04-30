@@ -4,10 +4,7 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardElevation="@dimen/delapan"
-    app:cardCornerRadius="@dimen/delapan"
-    android:layout_marginStart="8dp"
-    android:layout_marginEnd="8dp"
-    android:layout_marginTop="8dp">
+    app:cardCornerRadius="@dimen/delapan">
 
     <LinearLayout
         android:padding="@dimen/enambelas"

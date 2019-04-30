@@ -3,7 +3,7 @@ package com.perumdajepara.jlajah.model
 import com.google.gson.annotations.SerializedName
 import com.perumdajepara.jlajah.model.data.Lokasi
 
-data class LokasiByCategoryModel (
+data class LokasiModel (
     @SerializedName("status")
     var status: String = "",
 

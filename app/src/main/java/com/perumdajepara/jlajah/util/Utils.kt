@@ -1,12 +1,17 @@
 package com.perumdajepara.jlajah.util
 
+import android.Manifest
 import android.content.Context
 import android.content.res.Configuration
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.widget.RadioButton
+import android.widget.RadioGroup
+import com.nabinbhandari.android.permissions.PermissionHandler
+import com.nabinbhandari.android.permissions.Permissions
 import com.perumdajepara.jlajah.R
-import org.jetbrains.anko.alert
-import org.jetbrains.anko.okButton
+import org.jetbrains.anko.*
+import org.jetbrains.anko.support.v4.ctx
 import java.util.*
 
 fun View.terlihat() {
