@@ -6,17 +6,18 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.perumdajepara.jlajah.R
 import com.perumdajepara.jlajah.allreview.AllReviewActivity
 import com.perumdajepara.jlajah.model.DetailLokasiModel
+import com.perumdajepara.jlajah.model.LokasiFavoritModel
 import com.perumdajepara.jlajah.model.data.LokasiImage
 import com.perumdajepara.jlajah.model.data.Review
 import com.perumdajepara.jlajah.ulasan.UlasanActivity
-import com.perumdajepara.jlajah.util.ConstantVariable
-import com.perumdajepara.jlajah.util.hilang
-import com.perumdajepara.jlajah.util.showAlert
-import com.perumdajepara.jlajah.util.terlihat
+import com.perumdajepara.jlajah.util.*
+import hinl.kotlin.database.helper.Database
 import kotlinx.android.synthetic.main.activity_detail_lokasi.*
 import org.jetbrains.anko.*
 import org.jetbrains.anko.sdk27.coroutines.onClick
@@ -28,10 +29,15 @@ class DetailLokasiActivity : AppCompatActivity(), DetailLokasiView {
     private val imageData: MutableList<LokasiImage> = mutableListOf()
     private lateinit var imageAdapter: ImageSliderAdapter
     private lateinit var alertLoading: DialogInterface
+    private lateinit var menu: Menu
+    private lateinit var database: SQLHelper
 
     private var userId = 0
     private var idLokasi = 0
+    private var count = 0
     private lateinit var accessToken: String
+
+    private var icon: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,6 +53,9 @@ class DetailLokasiActivity : AppCompatActivity(), DetailLokasiView {
             title = ""
             setDisplayHomeAsUpEnabled(true)
         }
+
+        database = SQLHelper(this)
+        database.createTable(LokasiFavoritModel::class)
 
         idLokasi = intent.getIntExtra(ConstantVariable.id, 0)
         // userpref
@@ -116,6 +125,8 @@ class DetailLokasiActivity : AppCompatActivity(), DetailLokasiView {
     override fun showLoading() {
         pb_lokasi_image.terlihat()
         alertLoading()
+        btn_tulis_ulasan.hilang()
+        cv_ulasan.hilang()
     }
 
     override fun hideLoading() {
@@ -137,6 +148,7 @@ class DetailLokasiActivity : AppCompatActivity(), DetailLokasiView {
         rating_star.rating = it.ratingScore
         tv_rating_score.text = it.ratingScore.toString()
         tv_desc_lokasi.text = data.desc
+        icon = data.icon
 
         // set data kontak
         tv_hubungi_kami.onClick {
@@ -201,6 +213,44 @@ class DetailLokasiActivity : AppCompatActivity(), DetailLokasiView {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_detail_lokasi, menu)
+
+        count = database.count(LokasiFavoritModel::class) {
+            eq("id_lokasi", idLokasi)
+        }
+
+        if (count == 1)
+            menu?.getItem(0)?.icon = ContextCompat.getDrawable(this, R.drawable.ic_bookmark_black_24dp)
+        else
+            menu?.getItem(0)?.icon = ContextCompat.getDrawable(this, R.drawable.ic_bookmark_border_black_24dp)
+
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when (item?.itemId) {
+            R.id.bookmark -> {
+
+                if (count == 0) {
+                    val favorit = LokasiFavoritModel(
+                        locationName = tv_nama_lokasi.text.toString(),
+                        alamat = tv_alamat_lokasi.text.toString(),
+                        icon = icon,
+                        idLokasi = idLokasi
+                    )
+
+                    database.insert(favorit)
+                    invalidateOptionsMenu()
+                    toast(getString(R.string.lokasi_ditambahkan_bookmark))
+                } else {
+                    val lokasi = database.get(LokasiFavoritModel::class) {
+                        eq("id_lokasi", idLokasi)
+                    }
+                    lokasi?.get(0)?.let { database.delete(it) }
+                    invalidateOptionsMenu()
+                    toast(getString(R.string.lokasi_dihapus_bookmark))
+                }
+            }
+        }
         return true
     }
 

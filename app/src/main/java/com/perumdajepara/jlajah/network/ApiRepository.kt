@@ -61,6 +61,12 @@ interface ApiRepository {
         @Query("per_page") perPage: Int
     ): Observable<LokasiModel>
 
+    @GET("location/getradiusbycategory")
+    fun getRadiusByCategory(
+        @Query("code_language") codeLanguage: String,
+        @Query("id_category") idCategory: Int
+    ): Observable<LokasiModel>
+
     @GET("location/getdetail")
     fun getDetailLokasiById(
         @Query("code_language") codeLanguage: String,
@@ -98,4 +104,10 @@ interface ApiRepository {
         @Query("per-page") perPage: Int,
         @Query("sort") sort: String
     ): Observable<LokasiModel>
+
+    @GET("location/getmostpopular")
+    fun getLokasiPopuler(
+        @Query("code_language") codeLanguage: String
+    ): Observable<LokasiPopulerModel>
+
 }

@@ -47,7 +47,7 @@ class AccountFragment : Fragment(), AccountView {
     private lateinit var userPref: SharedPreferences
     private lateinit var userToken: String
     private var userId: Int = 0
-    private var lang: String = "in"
+    private var lang: String = ConstantVariable.indonesia
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -122,6 +122,11 @@ class AccountFragment : Fragment(), AccountView {
         tv_notelp.setText(userPref.getString(ConstantVariable.nomerHp, ""))
         tv_gender.setText(userPref.getString(ConstantVariable.gender, ""))
         genderId = userPref.getInt(ConstantVariable.genderId, 1)
+    }
+
+    override fun onHiddenChanged(hidden: Boolean) {
+        super.onHiddenChanged(hidden)
+        if (!hidden) setAccountData()
     }
 
     private fun genderAlert() {

@@ -102,4 +102,10 @@
     <string name="ascending" translatable="false">A-Z (Ascending)</string>
     <string name="descending" translatable="false">Z-A (Descending)</string>
     <string name="terdekat">Terdekat</string>
+    <string name="lokasi_ditambahkan_bookmark">Lokasi ditambah ke bookmark</string>
+    <string name="lokasi_dihapus_bookmark">Lokasi dihapus dari bookmark</string>
+    <string name="tidak_ada_lokasi_yang_ditandai">Tidak ada lokasi yang ditandai</string>
+    <string name="radius" translatable="false">Radius</string>
+    <string name="izin_diberikan">Izin diberikan</string>
+    <string name="pilih_kategori">Pilih Kategori</string>
 </resources>

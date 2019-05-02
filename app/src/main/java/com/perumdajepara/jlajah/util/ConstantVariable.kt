@@ -33,6 +33,7 @@ class ConstantVariable {
         const val indonesia = "in"
         const val english = "en"
         const val filterTag = "filterTag"
+        const val favorit = "favorit"
     }
 }
 

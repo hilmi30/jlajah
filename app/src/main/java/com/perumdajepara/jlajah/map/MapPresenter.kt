@@ -1,4 +1,4 @@
-package com.perumdajepara.jlajah.home
+package com.perumdajepara.jlajah.map
 
 import android.content.Context
 import com.perumdajepara.jlajah.BuildConfig
@@ -15,13 +15,13 @@ import java.net.UnknownHostException
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.TimeoutException
 
-class HomePresenter: BasePresenter<HomeView> {
+class MapPresenter: BasePresenter<MapView> {
 
-    private var mView: HomeView? = null
-    private var services = RetrofitBuilder.getInstance(BuildConfig.BASE_URL_API).create(ApiRepository::class.java)
+    private var mView: MapView? = null
+    private val services = RetrofitBuilder.getInstance(BuildConfig.BASE_URL_API).create(ApiRepository::class.java)
     private var disposable: Disposable? = null
 
-    override fun onAttach(view: HomeView) {
+    override fun onAttach(view: MapView) {
         mView = view
     }
 
@@ -33,8 +33,31 @@ class HomePresenter: BasePresenter<HomeView> {
         disposable?.dispose()
     }
 
+    fun getRadiusByCategory(context: Context, codeLang: String, idCategory: Int) {
+        disposable = services.getRadiusByCategory(
+            codeLanguage = codeLang,
+            idCategory = idCategory
+        )
+            .debounce(100, TimeUnit.MILLISECONDS)
+            .timeout(10, TimeUnit.SECONDS)
+            .subscribeOn(Schedulers.newThread())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeBy(
+                onNext = {
+                    mView?.showMarker(it.items)
+                },
+                onError = {
+                    if (it is HttpException) mView?.error(context.getString(R.string.terjadi_kesalahan))
+                    if (it is UnknownHostException || it is TimeoutException) mView?.error(context.getString(R.string.cek_koneksi))
+                },
+                onComplete = {
+
+                }
+            )
+    }
+
     fun getAllCategory(codeLang: String, context: Context) {
-        mView?.showCategoryLoading()
+        mView?.showLoading()
         disposable = services.getAllCategory(codeLang)
             .debounce(100, TimeUnit.MILLISECONDS)
             .timeout(10, TimeUnit.SECONDS)
@@ -42,41 +65,17 @@ class HomePresenter: BasePresenter<HomeView> {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeBy(
                 onNext = {
-                    mView?.showData(it.data)
-                    mView?.hideCategoryLoading()
+                    mView?.showKategori(it.data)
+                    mView?.hideLoading()
                 },
                 onError = {
-                    if (it is HttpException) mView?.errorKategori(context.getString(R.string.terjadi_kesalahan))
-                    if (it is UnknownHostException || it is TimeoutException) mView?.errorKategori(context.getString(R.string.cek_koneksi))
+                    if (it is HttpException) mView?.error(context.getString(R.string.terjadi_kesalahan))
+                    if (it is UnknownHostException || it is TimeoutException) mView?.error(context.getString(R.string.cek_koneksi))
 
-                    mView?.hideCategoryLoading()
+                    mView?.hideLoading()
                 },
                 onComplete = {
-                    mView?.hideCategoryLoading()
-                }
-            )
-    }
-
-    fun getLokasiPopuler(context: Context, codeLang: String) {
-        mView?.showLokasiPopulerLoading()
-        disposable = services.getLokasiPopuler(codeLang)
-            .debounce(100, TimeUnit.MILLISECONDS)
-            .timeout(10, TimeUnit.SECONDS)
-            .subscribeOn(Schedulers.newThread())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribeBy(
-                onNext = {
-                    mView?.showDataLokasiPopuler(it.data)
-                    mView?.hideLokasiPopulerLoading()
-                },
-                onError = {
-                    if (it is HttpException) mView?.errorLokasiPopuler(context.getString(R.string.terjadi_kesalahan))
-                    if (it is UnknownHostException || it is TimeoutException) mView?.errorLokasiPopuler(context.getString(R.string.cek_koneksi))
-
-                    mView?.hideLokasiPopulerLoading()
-                },
-                onComplete = {
-                    mView?.hideLokasiPopulerLoading()
+                    mView?.hideLoading()
                 }
             )
     }

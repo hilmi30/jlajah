@@ -17,6 +17,7 @@ import com.perumdajepara.jlajah.carilokasi.CariLokasiActivity
 import com.perumdajepara.jlajah.detaillokasi.DetailLokasiActivity
 import com.perumdajepara.jlajah.lokasibycategory.LokasiByCategoryActivity
 import com.perumdajepara.jlajah.model.data.Category
+import com.perumdajepara.jlajah.model.data.Lokasi
 import com.perumdajepara.jlajah.util.*
 import kotlinx.android.synthetic.main.fragment_home.*
 import org.jetbrains.anko.*
@@ -29,7 +30,9 @@ import org.jetbrains.anko.support.v4.toast
 class HomeFragment : Fragment(), HomeView {
 
     private val categoryData = mutableListOf<Category>()
+    private val lokasiPopulerData = mutableListOf<Lokasi>()
     private lateinit var adapterKategori: KategoriAdapter
+    private lateinit var adapterLokasiPopuler: LokasiPopulerAdapter
     private lateinit var rootView: View
     private val homePresenter = HomePresenter()
     private lateinit var asc: RadioButton
@@ -51,26 +54,6 @@ class HomeFragment : Fragment(), HomeView {
         onAttachView()
     }
 
-    override fun showCategoryLoading() {
-        pb_kategori.terlihat()
-        lyt_error_kategori.hilang()
-    }
-
-    override fun errorKategori(msg: String) {
-        lyt_error_kategori.terlihat()
-        tv_msg_no_koneksi.text = msg
-    }
-
-    override fun hideCategoryLoading() {
-        pb_kategori.hilang()
-    }
-
-    override fun showData(data: List<Category>) {
-        categoryData.clear()
-        categoryData.addAll(data)
-        adapterKategori.notifyDataSetChanged()
-    }
-
     override fun onAttachView() {
         homePresenter.onAttach(this)
 
@@ -80,6 +63,7 @@ class HomeFragment : Fragment(), HomeView {
         val lang = userPref.getString(ConstantVariable.myLang, "in")
 
         homePresenter.getAllCategory(lang as String, ctx)
+        homePresenter.getLokasiPopuler(ctx, lang)
 
         // rv kategori
         adapterKategori = KategoriAdapter(categoryData) {
@@ -116,14 +100,11 @@ class HomeFragment : Fragment(), HomeView {
         }
 
         // rv lokasi populer
-        val lokasiPopulerData = mutableListOf<LokasiPopulerModel>()
-        for (i in 1..10) {
-            lokasiPopulerData.add(LokasiPopulerModel(R.drawable.ic_launcher_background, "Testing", "Testing alamat",
-                4.0F, 4.0))
-        }
-
-        val adapterLokasiPopuler = LokasiPopulerAdapter(lokasiPopulerData) {
-            startActivity<DetailLokasiActivity>()
+        // rv_lokasi populer
+        adapterLokasiPopuler = LokasiPopulerAdapter(lokasiPopulerData) {
+            startActivity<DetailLokasiActivity>(
+                ConstantVariable.id to it.id.toInt()
+            )
         }
 
         rv_lokasi_populer.apply {
@@ -131,6 +112,45 @@ class HomeFragment : Fragment(), HomeView {
             layoutManager = LinearLayoutManager(context, LinearLayout.HORIZONTAL, false)
             addItemDecoration(ItemDecorationHorizontal(32))
         }
+    }
+
+    override fun showCategoryLoading() {
+        pb_kategori.terlihat()
+        lyt_error_kategori.hilang()
+    }
+
+    override fun errorKategori(msg: String) {
+        lyt_error_kategori.terlihat()
+        tv_msg_no_koneksi.text = msg
+    }
+
+    override fun hideCategoryLoading() {
+        pb_kategori.hilang()
+    }
+
+    override fun showData(data: List<Category>) {
+        categoryData.clear()
+        categoryData.addAll(data)
+        adapterKategori.notifyDataSetChanged()
+    }
+
+    override fun errorLokasiPopuler(msg: String) {
+        lyt_error_lokasi_populer.terlihat()
+        tv_msg_no_koneksi_lokasi_populer.text = msg
+    }
+
+    override fun showLokasiPopulerLoading() {
+        pb_lokasi_populer.terlihat()
+    }
+
+    override fun hideLokasiPopulerLoading() {
+        pb_lokasi_populer.hilang()
+    }
+
+    override fun showDataLokasiPopuler(data: List<Lokasi>) {
+        lokasiPopulerData.clear()
+        lokasiPopulerData.addAll(data)
+        adapterLokasiPopuler.notifyDataSetChanged()
     }
 
     private fun alertFilter() {

@@ -30,8 +30,6 @@ class LokasiByCategoryActivity : AppCompatActivity(), LokasiByCategoryView {
     private lateinit var dsc: RadioButton
     private lateinit var dkt: RadioButton
     private var filterTag = ConstantVariable.ascending
-    private var namaLokasi = ""
-    private lateinit var userPref: SharedPreferences
     private var myLang = ""
     private var idCategory = 0
 
@@ -66,7 +64,13 @@ class LokasiByCategoryActivity : AppCompatActivity(), LokasiByCategoryView {
             )
         }
 
-        kategoriLokasiPresenter.getLokasiByCategory(this, codeLang as String, idCategory, startPage, perPage)
+        kategoriLokasiPresenter.getLokasiByCategory(
+            context = this,
+            codeLang = codeLang as String,
+            idCategory = idCategory,
+            page = startPage,
+            perPage = perPage
+        )
 
         rv_kategori_lokasi.apply {
             adapter = adapterKategoriLokasi
@@ -78,7 +82,13 @@ class LokasiByCategoryActivity : AppCompatActivity(), LokasiByCategoryView {
 
                     if (!recyclerView.canScrollVertically(1) && startPage <= pageCount && pageCount != 1) {
                         startPage = startPage.plus(1)
-                        kategoriLokasiPresenter.getLokasiByCategory(this@LokasiByCategoryActivity, codeLang, idCategory, startPage, perPage)
+                        kategoriLokasiPresenter.getLokasiByCategory(
+                            context = this@LokasiByCategoryActivity,
+                            codeLang =  codeLang,
+                            idCategory =  idCategory,
+                            page =  startPage,
+                            perPage =  perPage
+                        )
                     }
                 }
             })
@@ -88,9 +98,11 @@ class LokasiByCategoryActivity : AppCompatActivity(), LokasiByCategoryView {
         edt_cari_lokasi_kategori.setOnKeyListener { _, keyCode, event ->
             if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_UP) {
 
+                startPage = 1
+
                 kategoriLokasiPresenter.cariLokasi(
                     context = this@LokasiByCategoryActivity,
-                    key = namaLokasi,
+                    key = edt_cari_lokasi_kategori.text.toString(),
                     sort = filterTag,
                     page = startPage,
                     perPage = perPage,
@@ -175,9 +187,22 @@ class LokasiByCategoryActivity : AppCompatActivity(), LokasiByCategoryView {
                 }
             }
             positiveButton(R.string.pilih) {
+
+                startPage = 1
+
                 if (asc.isChecked) filterTag = asc.tag.toString()
                 if (dsc.isChecked) filterTag = dsc.tag.toString()
                 if (dkt.isChecked) filterTag = dkt.tag.toString()
+
+                kategoriLokasiPresenter.cariLokasi(
+                    context = this@LokasiByCategoryActivity,
+                    key = edt_cari_lokasi_kategori.text.toString(),
+                    sort = filterTag,
+                    page = startPage,
+                    perPage = perPage,
+                    codeLanguage = myLang,
+                    category = idCategory
+                )
             }
             negativeButton(R.string.batal) {
                 it.dismiss()

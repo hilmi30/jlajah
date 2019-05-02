@@ -4,7 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.LinearLayout
+import android.view.KeyEvent
 import android.widget.RadioButton
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -14,9 +14,9 @@ import com.perumdajepara.jlajah.lokasibycategory.LokasiByCategoryAdapter
 import com.perumdajepara.jlajah.model.data.Lokasi
 import com.perumdajepara.jlajah.util.*
 import kotlinx.android.synthetic.main.activity_cari_lokasi.*
+import kotlinx.android.synthetic.main.activity_lokasi_by_kategori.*
 import org.jetbrains.anko.*
 import org.jetbrains.anko.sdk27.coroutines.onClick
-import org.jetbrains.anko.support.v4.alert
 
 class CariLokasiActivity : AppCompatActivity(), CariLokasiView {
 
@@ -24,12 +24,11 @@ class CariLokasiActivity : AppCompatActivity(), CariLokasiView {
     private lateinit var dsc: RadioButton
     private lateinit var dkt: RadioButton
     private var filterTag = ConstantVariable.ascending
-    private var namaLokasi = ""
     private lateinit var userPref: SharedPreferences
-    private var myLang = ""
+    private var myLang = ConstantVariable.indonesia
 
     private val perPage = 10
-    private var page = 1
+    private var startPage = 1
     private var pageCount = 0
 
     private val cariLokasiPresenter = CariLokasiPresenter()
@@ -46,12 +45,33 @@ class CariLokasiActivity : AppCompatActivity(), CariLokasiView {
     override fun onAttachView() {
         cariLokasiPresenter.onAttach(this)
 
-        namaLokasi = intent.getStringExtra(ConstantVariable.namaLokasi)
+        val namaLokasi = intent.getStringExtra(ConstantVariable.namaLokasi)
+        edt_cari_lokasi.setText(namaLokasi)
+
         filterTag = intent.getStringExtra(ConstantVariable.filterTag)
         userPref = getSharedPreferences(ConstantVariable.userPref, Context.MODE_PRIVATE)
         myLang = userPref.getString(ConstantVariable.myLang, ConstantVariable.indonesia) as String
 
-        edt_cari_lokasi.setText(namaLokasi)
+        val rootView = window.decorView.rootView
+        edt_cari_lokasi.setOnKeyListener { _, keyCode, event ->
+            if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_UP) {
+
+                startPage = 1
+
+                cariLokasiPresenter.cariLokasi(
+                    context = this,
+                    key = edt_cari_lokasi.text.toString(),
+                    sort = filterTag,
+                    page = startPage,
+                    perPage = perPage,
+                    codeLanguage = myLang
+                )
+
+                hideKeyboard(ctx, rootView)
+                return@setOnKeyListener true
+            }
+            false
+        }
 
         cariLokasiAdapter = LokasiByCategoryAdapter(lokasiData) {
             startActivity<DetailLokasiActivity>(
@@ -63,7 +83,7 @@ class CariLokasiActivity : AppCompatActivity(), CariLokasiView {
             context = this,
             key = namaLokasi,
             sort = filterTag,
-            page = page,
+            page = startPage,
             perPage = perPage,
             codeLanguage = myLang
         )
@@ -76,13 +96,13 @@ class CariLokasiActivity : AppCompatActivity(), CariLokasiView {
                 override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                     super.onScrollStateChanged(recyclerView, newState)
 
-                    if (!recyclerView.canScrollVertically(1) && page <= pageCount && pageCount != 1) {
-                        page = page.plus(1)
+                    if (!recyclerView.canScrollVertically(1) && startPage <= pageCount && pageCount != 1) {
+                        startPage = startPage.plus(1)
                         cariLokasiPresenter.cariLokasi(
                             context = this@CariLokasiActivity,
-                            key = namaLokasi,
+                            key = edt_cari_lokasi.text.toString(),
                             sort = filterTag,
-                            page = page,
+                            page = startPage,
                             perPage = perPage,
                             codeLanguage = myLang
                         )
@@ -170,9 +190,21 @@ class CariLokasiActivity : AppCompatActivity(), CariLokasiView {
                 }
             }
             positiveButton(R.string.pilih) {
+
+                startPage = 1
+
                 if (asc.isChecked) filterTag = asc.tag.toString()
                 if (dsc.isChecked) filterTag = dsc.tag.toString()
                 if (dkt.isChecked) filterTag = dkt.tag.toString()
+
+                cariLokasiPresenter.cariLokasi(
+                    context = this@CariLokasiActivity,
+                    key = edt_cari_lokasi.text.toString(),
+                    sort = filterTag,
+                    page = startPage,
+                    perPage = perPage,
+                    codeLanguage = myLang
+                )
             }
             negativeButton(R.string.batal) {
                 it.dismiss()

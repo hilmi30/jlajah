@@ -32,6 +32,7 @@
             android:text="@string/title"/>
 
         <TextView
+            android:visibility="gone"
             android:id="@+id/tv_alamat_lokasi"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
@@ -42,8 +43,11 @@
             android:layout_height="wrap_content"
             android:text="@string/alamat_lokasi"/>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="8dp"/>
+
         <LinearLayout
-            android:visibility="gone"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
