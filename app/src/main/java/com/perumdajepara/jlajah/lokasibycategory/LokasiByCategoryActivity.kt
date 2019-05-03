@@ -30,7 +30,6 @@ class LokasiByCategoryActivity : AppCompatActivity(), LokasiByCategoryView {
     private lateinit var dsc: RadioButton
     private lateinit var dkt: RadioButton
     private var filterTag = ConstantVariable.ascending
-    private var myLang = ""
     private var idCategory = 0
 
     private var startPage = 1
@@ -55,9 +54,6 @@ class LokasiByCategoryActivity : AppCompatActivity(), LokasiByCategoryView {
             setDisplayHomeAsUpEnabled(true)
         }
 
-        val codeLang = getSharedPreferences(ConstantVariable.userPref, Context.MODE_PRIVATE)
-            .getString(ConstantVariable.myLang, "in")
-
         adapterKategoriLokasi = LokasiByCategoryAdapter(dataLokasi) {
             startActivity<DetailLokasiActivity>(
                 ConstantVariable.id to it.id.toInt()
@@ -66,7 +62,7 @@ class LokasiByCategoryActivity : AppCompatActivity(), LokasiByCategoryView {
 
         kategoriLokasiPresenter.getLokasiByCategory(
             context = this,
-            codeLang = codeLang as String,
+            codeLang = getMyLang(this),
             idCategory = idCategory,
             page = startPage,
             perPage = perPage
@@ -84,7 +80,7 @@ class LokasiByCategoryActivity : AppCompatActivity(), LokasiByCategoryView {
                         startPage = startPage.plus(1)
                         kategoriLokasiPresenter.getLokasiByCategory(
                             context = this@LokasiByCategoryActivity,
-                            codeLang =  codeLang,
+                            codeLang =  getMyLang(this@LokasiByCategoryActivity),
                             idCategory =  idCategory,
                             page =  startPage,
                             perPage =  perPage
@@ -106,7 +102,7 @@ class LokasiByCategoryActivity : AppCompatActivity(), LokasiByCategoryView {
                     sort = filterTag,
                     page = startPage,
                     perPage = perPage,
-                    codeLanguage = myLang,
+                    codeLanguage = getMyLang(this),
                     category = idCategory
                 )
 
@@ -200,7 +196,7 @@ class LokasiByCategoryActivity : AppCompatActivity(), LokasiByCategoryView {
                     sort = filterTag,
                     page = startPage,
                     perPage = perPage,
-                    codeLanguage = myLang,
+                    codeLanguage = getMyLang(this@LokasiByCategoryActivity),
                     category = idCategory
                 )
             }

@@ -57,13 +57,8 @@ class HomeFragment : Fragment(), HomeView {
     override fun onAttachView() {
         homePresenter.onAttach(this)
 
-        // panggil user sharedpref
-        val userPref = ctx.getSharedPreferences(ConstantVariable.userPref, Context.MODE_PRIVATE)
-        // get item userpref
-        val lang = userPref.getString(ConstantVariable.myLang, "in")
-
-        homePresenter.getAllCategory(lang as String, ctx)
-        homePresenter.getLokasiPopuler(ctx, lang)
+        homePresenter.getAllCategory(getMyLang(ctx), ctx)
+        homePresenter.getLokasiPopuler(ctx, getMyLang(ctx))
 
         // rv kategori
         adapterKategori = KategoriAdapter(categoryData) {
@@ -80,7 +75,11 @@ class HomeFragment : Fragment(), HomeView {
         }
 
         tv_coba_lagi.onClick {
-            homePresenter.getAllCategory(lang, ctx)
+            homePresenter.getAllCategory(getMyLang(ctx), ctx)
+        }
+
+        tv_coba_lagi_lokasi_populer.onClick {
+            homePresenter.getLokasiPopuler(ctx, getMyLang(ctx))
         }
 
         imgbtn_filter.onClick {
@@ -99,7 +98,6 @@ class HomeFragment : Fragment(), HomeView {
             false
         }
 
-        // rv lokasi populer
         // rv_lokasi populer
         adapterLokasiPopuler = LokasiPopulerAdapter(lokasiPopulerData) {
             startActivity<DetailLokasiActivity>(

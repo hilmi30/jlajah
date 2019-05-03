@@ -83,4 +83,10 @@
     <string name="lokasi_dihapus_bookmark">Lokasi dihapus dari bookmark</string>
     <string name="lokasi_ditambahkan_bookmark">Lokasi ditambah ke bookmark</string>
     <string name="tidak_ada_lokasi_yang_ditandai">Tidak ada lokasi yang ditandai</string>
+    <string name="anda_melebihi_batas_radius">Anda melebihi batas radius</string>
+    <string name="diperlukan_izin_lokasi">Diperlukan izin akses lokasi anda</string>
+    <string name="izin_diberikan">Izin diberikan</string>
+    <string name="izinkan">Izinkan</string>
+    <string name="masukan_nilai_radius">Masukkan Nilai Radius (meter)</string>
+    <string name="nilai_radius">Nilai radius</string>
 </resources>

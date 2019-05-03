@@ -6,31 +6,33 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.DialogInterface
 import android.content.SharedPreferences
+import android.content.pm.PackageManager
 import android.graphics.Color
+import android.location.LocationManager
 import android.os.Bundle
 import android.text.InputType
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.CircleOptions
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.gms.maps.model.*
 import com.perumdajepara.jlajah.R
 import kotlinx.android.synthetic.main.fragment_map.*
 import com.google.maps.android.SphericalUtil
-import com.nabinbhandari.android.permissions.PermissionHandler
-import com.nabinbhandari.android.permissions.Permissions
 import com.perumdajepara.jlajah.model.data.Category
 import com.perumdajepara.jlajah.model.data.Lokasi
 import com.perumdajepara.jlajah.util.ConstantVariable
 import com.perumdajepara.jlajah.util.ItemDecoration
+import com.perumdajepara.jlajah.util.getMyLang
 import org.jetbrains.anko.*
 import org.jetbrains.anko.recyclerview.v7.recyclerView
 import org.jetbrains.anko.sdk27.coroutines.onClick
@@ -44,15 +46,23 @@ class MapFragment : Fragment(), OnMapReadyCallback, MapView {
     private val mapPresenter = MapPresenter()
     private lateinit var alertLoading: DialogInterface
     private lateinit var userPref: SharedPreferences
-    private lateinit var myLang: String
 
     private lateinit var kategoriMarkerAdapter: KategoriMarkerAdapter
     private var kategoriMarkerData: MutableList<Category> = mutableListOf()
     private var lokasiMarkerData: MutableList<Lokasi> = mutableListOf()
     private lateinit var alertInterface: DialogInterface
 
-    private var radius = 300.0
+    private var radius: Float = 500F
     private lateinit var edtRadius: EditText
+    private var myPos = LatLng(-6.5906502, 110.6673202)
+
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
+    private lateinit var locationManager: LocationManager
+
+    private var fragHidden = true
+    private var gpsEnabled = false
+
+    private var idCategory = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -68,7 +78,11 @@ class MapFragment : Fragment(), OnMapReadyCallback, MapView {
         val mapFragment = childFragmentManager.findFragmentById(R.id.maps) as SupportMapFragment
         mapFragment.getMapAsync(this)
 
-        izinLokasi()
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(ctx)
+        locationManager = ctx.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+
+        userPref = ctx.getSharedPreferences(ConstantVariable.userPref, Context.MODE_PRIVATE)
+        radius = userPref.getFloat(ConstantVariable.radius, 500F)
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
@@ -80,14 +94,10 @@ class MapFragment : Fragment(), OnMapReadyCallback, MapView {
     override fun onAttachView() {
         mapPresenter.onAttach(this)
 
-        setItemMap()
-        tv_radius.text = "Radius: $radius"
-
-        userPref = ctx.getSharedPreferences(ConstantVariable.userPref, Context.MODE_PRIVATE)
-        myLang = userPref.getString(ConstantVariable.myLang, ConstantVariable.indonesia) as String
+        tv_radius.text = "Radius: ${radius.toInt()} m"
 
         mapPresenter.getAllCategory(
-            codeLang = myLang,
+            codeLang = getMyLang(ctx),
             context = ctx
         )
 
@@ -95,19 +105,65 @@ class MapFragment : Fragment(), OnMapReadyCallback, MapView {
             alertInterface.dismiss()
             tv_kategori.text = it.nameCategory
 
-            mapPresenter.getRadiusByCategory(
+            mapPresenter.getLokasiByCategoryAndRadius(
                 context = ctx,
-                codeLang = myLang,
+                codeLang = getMyLang(ctx),
                 idCategory = it.id.toInt()
             )
         }
 
-        fbtn_category.onClick {
+        tv_kategori.onClick {
             alertKategori()
         }
 
-        fbtn_radius.onClick {
+        tv_radius.onClick {
             alertRadius()
+        }
+
+        fbtn_my_location.onClick {
+            setCurrentLocation()
+        }
+    }
+
+    private fun setCurrentLocation() {
+        if (ContextCompat.checkSelfPermission(ctx, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
+            ContextCompat.checkSelfPermission(ctx, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+
+            mMap.isMyLocationEnabled = true
+            gpsEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
+
+            if (gpsEnabled && fragHidden) {
+                fusedLocationClient.lastLocation.addOnSuccessListener {
+                    if (it != null) {
+                        setItemMap(it.latitude, it.longitude)
+                        mapPresenter.getLokasiByCategoryAndRadius(
+                            context = ctx,
+                            codeLang = getMyLang(ctx),
+                            idCategory = idCategory
+                        )
+                    }
+                }
+            } else {
+                alert {
+                    isCancelable = false
+                    title = "Lokasi Tidak Aktif"
+                    message = "Perangkat anda terdeteksi belum mengaktifkan lokasi"
+                    okButton {
+                        it.dismiss()
+                    }
+                }.show()
+            }
+        } else {
+            alert {
+                title = getString(R.string.akses_ditolak)
+                message = getString(R.string.diperlukan_izin_lokasi)
+                negativeButton(R.string.tutup) {
+                    it.dismiss()
+                }
+                positiveButton(getString(R.string.izinkan)) {
+                    setCurrentLocation()
+                }
+            }.show()
         }
     }
 
@@ -115,14 +171,14 @@ class MapFragment : Fragment(), OnMapReadyCallback, MapView {
     private fun alertRadius() {
         alertInterface = alert {
             isCancelable = false
-            title = "Masukkan Nilai Radius"
+            title = getString(R.string.masukan_nilai_radius)
             customView {
                 verticalLayout {
                     padding = dip(16)
 
                     edtRadius = editText {
-                        setText(radius.toString())
-                        hint = "Nilai radius"
+                        setText(radius.toInt().toString())
+                        hint = getString(R.string.nilai_radius)
                         inputType = InputType.TYPE_CLASS_NUMBER
                     }
                 }
@@ -130,28 +186,32 @@ class MapFragment : Fragment(), OnMapReadyCallback, MapView {
                     it.dismiss()
                 }
                 positiveButton(R.string.submit) {
-                    if (radius < 10000.0) {
-                        radius = edtRadius.text.toString().toDouble()
-                        tv_radius.text = "Radius: $radius"
+                    if (radius < ConstantVariable.limitRadius) {
+                        radius = edtRadius.text.toString().toFloat()
+                        // simpan dalam sharedpref
+                        userPref.edit().putFloat(ConstantVariable.radius, radius).apply()
+
+                        tv_radius.text = "Radius: ${radius.toInt()} m"
+
                         mMap.clear()
-                        setItemMap()
+                        setItemMap(myPos.latitude, myPos.longitude)
                         loopMarker()
                     } else {
-                        toast("Anda melebihi batas radius")
+                        toast(getString(R.string.anda_melebihi_batas_radius))
                     }
                 }
             }
         }.show()
     }
 
-    private fun setItemMap() {
-        val center = LatLng(-6.59064703, 110.66732168)
-        mMap.addMarker(MarkerOptions().position(center).title("Jepara"))
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(center))
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(15F))
+    private fun setItemMap(lat: Double, lng: Double) {
+        myPos = LatLng(lat, lng)
+        mMap.clear()
+        mMap.uiSettings.isMyLocationButtonEnabled = false
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(myPos, 15f))
         mMap.addCircle(CircleOptions()
-            .center(center)
-            .radius(radius)
+            .center(myPos)
+            .radius(radius.toDouble())
             .strokeColor(Color.rgb(0, 136, 255))
             .fillColor(Color.argb(20, 0, 136, 255))
         )
@@ -163,7 +223,7 @@ class MapFragment : Fragment(), OnMapReadyCallback, MapView {
 
     override fun showMarker(items: List<Lokasi>) {
         mMap.clear()
-        setItemMap()
+        setItemMap(myPos.latitude, myPos.longitude)
         lokasiMarkerData.clear()
         lokasiMarkerData.addAll(items)
 
@@ -176,15 +236,16 @@ class MapFragment : Fragment(), OnMapReadyCallback, MapView {
             val marker = mMap.addMarker(MarkerOptions()
                 .position(position)
                 .title(it.locationName)
+                .snippet(it.alamat)
             )
 
-            val center = LatLng(-6.59064703, 110.66732168)
-            marker.isVisible = SphericalUtil.computeDistanceBetween(center, marker.position) < radius
+            marker.isVisible = SphericalUtil.computeDistanceBetween(myPos, marker.position) < radius
         }
     }
 
     override fun error(msg: String) {
         alertError(msg)
+        mMap.clear()
     }
 
     override fun hideLoading() {
@@ -211,7 +272,7 @@ class MapFragment : Fragment(), OnMapReadyCallback, MapView {
             message = msg
             positiveButton(R.string.coba_lagi) {
                 mapPresenter.getAllCategory(
-                    codeLang = myLang,
+                    codeLang = getMyLang(ctx),
                     context = ctx
                 )
             }
@@ -222,13 +283,11 @@ class MapFragment : Fragment(), OnMapReadyCallback, MapView {
         kategoriMarkerData.clear()
         kategoriMarkerData.addAll(data)
         kategoriMarkerAdapter.notifyDataSetChanged()
+        tv_kategori.text = kategoriMarkerData[2].nameCategory
 
-        tv_kategori.text = kategoriMarkerData[0].nameCategory
-        mapPresenter.getRadiusByCategory(
-            context = ctx,
-            codeLang = myLang,
-            idCategory = kategoriMarkerData[0].id.toInt()
-        )
+        idCategory = kategoriMarkerData[2].id.toInt()
+
+        setCurrentLocation()
     }
 
     private fun alertKategori() {
@@ -257,28 +316,6 @@ class MapFragment : Fragment(), OnMapReadyCallback, MapView {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        onDestroyView()
-    }
-
-    private fun izinLokasi() {
-        Permissions.check(ctx, Manifest.permission.ACCESS_FINE_LOCATION, null, object: PermissionHandler() {
-            override fun onGranted() {
-                //
-            }
-
-            override fun onDenied(context: Context?, deniedPermissions: java.util.ArrayList<String>?) {
-                super.onDenied(context, deniedPermissions)
-                alert {
-                    title = getString(R.string.akses_ditolak)
-                    message = "Diperlukan izin akses lokasi anda"
-                    negativeButton(R.string.tutup) {
-                        it.dismiss()
-                    }
-                    positiveButton("Izinkan") {
-                        izinLokasi()
-                    }
-                }.show()
-            }
-        })
+        onDetachView()
     }
 }

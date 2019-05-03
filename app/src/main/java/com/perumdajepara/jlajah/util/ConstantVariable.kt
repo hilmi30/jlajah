@@ -2,6 +2,10 @@ package com.perumdajepara.jlajah.util
 
 class ConstantVariable {
     companion object {
+
+        // limit radius
+        const val limitRadius = 10000.0
+
         // database name
         const val dbName = "jlajah"
 
@@ -34,6 +38,7 @@ class ConstantVariable {
         const val english = "en"
         const val filterTag = "filterTag"
         const val favorit = "favorit"
+        const val radius = "radius"
     }
 }
 

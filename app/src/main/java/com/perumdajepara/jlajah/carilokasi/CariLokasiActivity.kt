@@ -24,8 +24,6 @@ class CariLokasiActivity : AppCompatActivity(), CariLokasiView {
     private lateinit var dsc: RadioButton
     private lateinit var dkt: RadioButton
     private var filterTag = ConstantVariable.ascending
-    private lateinit var userPref: SharedPreferences
-    private var myLang = ConstantVariable.indonesia
 
     private val perPage = 10
     private var startPage = 1
@@ -49,8 +47,6 @@ class CariLokasiActivity : AppCompatActivity(), CariLokasiView {
         edt_cari_lokasi.setText(namaLokasi)
 
         filterTag = intent.getStringExtra(ConstantVariable.filterTag)
-        userPref = getSharedPreferences(ConstantVariable.userPref, Context.MODE_PRIVATE)
-        myLang = userPref.getString(ConstantVariable.myLang, ConstantVariable.indonesia) as String
 
         val rootView = window.decorView.rootView
         edt_cari_lokasi.setOnKeyListener { _, keyCode, event ->
@@ -64,7 +60,7 @@ class CariLokasiActivity : AppCompatActivity(), CariLokasiView {
                     sort = filterTag,
                     page = startPage,
                     perPage = perPage,
-                    codeLanguage = myLang
+                    codeLanguage = getMyLang(this)
                 )
 
                 hideKeyboard(ctx, rootView)
@@ -85,7 +81,7 @@ class CariLokasiActivity : AppCompatActivity(), CariLokasiView {
             sort = filterTag,
             page = startPage,
             perPage = perPage,
-            codeLanguage = myLang
+            codeLanguage = getMyLang(this)
         )
 
         rv_cari_lokasi.apply {
@@ -104,7 +100,7 @@ class CariLokasiActivity : AppCompatActivity(), CariLokasiView {
                             sort = filterTag,
                             page = startPage,
                             perPage = perPage,
-                            codeLanguage = myLang
+                            codeLanguage = getMyLang(this@CariLokasiActivity)
                         )
                     }
                 }
@@ -203,7 +199,7 @@ class CariLokasiActivity : AppCompatActivity(), CariLokasiView {
                     sort = filterTag,
                     page = startPage,
                     perPage = perPage,
-                    codeLanguage = myLang
+                    codeLanguage = getMyLang(this@CariLokasiActivity)
                 )
             }
             negativeButton(R.string.batal) {

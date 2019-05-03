@@ -33,7 +33,7 @@ class MapPresenter: BasePresenter<MapView> {
         disposable?.dispose()
     }
 
-    fun getRadiusByCategory(context: Context, codeLang: String, idCategory: Int) {
+    fun getLokasiByCategoryAndRadius(context: Context, codeLang: String, idCategory: Int) {
         disposable = services.getRadiusByCategory(
             codeLanguage = codeLang,
             idCategory = idCategory

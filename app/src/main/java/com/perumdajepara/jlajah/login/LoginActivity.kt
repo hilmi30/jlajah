@@ -7,10 +7,7 @@ import android.os.Bundle
 import android.text.InputType
 import android.util.Patterns
 import android.view.Gravity
-import android.widget.AutoCompleteTextView
-import android.widget.LinearLayout
-import android.widget.ProgressBar
-import android.widget.TextView
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.perumdajepara.jlajah.R
@@ -20,9 +17,12 @@ import com.perumdajepara.jlajah.signup.SignupActivity
 import com.perumdajepara.jlajah.util.*
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.activity_signup.*
+import kotlinx.android.synthetic.main.fragment_account.*
 import org.jetbrains.anko.*
 import org.jetbrains.anko.sdk27.coroutines.onClick
 import org.jetbrains.anko.support.v4.alert
+import org.jetbrains.anko.support.v4.startActivity
+import org.jetbrains.anko.support.v4.toast
 
 
 class LoginActivity : AppCompatActivity(), LoginView {
@@ -34,6 +34,8 @@ class LoginActivity : AppCompatActivity(), LoginView {
     private lateinit var edtPassBaru: AutoCompleteTextView
     private lateinit var edtUlangiPass: AutoCompleteTextView
     private lateinit var submitBtn: TextView
+    private lateinit var rbIndo: RadioButton
+    private lateinit var rbEng: RadioButton
     private lateinit var alertLoading: DialogInterface
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -64,6 +66,53 @@ class LoginActivity : AppCompatActivity(), LoginView {
         tv_login_lupa_password.onClick {
             alertLupaPassword()
         }
+
+        btn_language.onClick {
+            bahasaAlert()
+        }
+    }
+
+    private fun bahasaAlert() {
+        alert {
+            isCancelable = false
+            customView {
+                verticalLayout {
+                    padding = dip(16)
+                    radioGroup {
+                        rbIndo = radioButton {
+                            text = getString(R.string.indonesia)
+                            tag = ConstantVariable.indonesia
+                        }.lparams {
+                            bottomMargin = dip(16)
+                        }
+                        rbEng = radioButton {
+                            text = getString(R.string.english)
+                            tag = ConstantVariable.english
+                        }
+
+                        check(if (getMyLang(ctx) == rbIndo.tag) rbIndo.id else rbEng.id)
+                    }
+                }
+            }
+            positiveButton(getString(R.string.pilih)) {
+                val tag: String = if (rbIndo.isChecked) {
+                    rbIndo.tag.toString()
+                } else {
+                    rbEng.tag.toString()
+                }
+
+                // ganti bahasa
+                setLocale(ctx, tag)
+
+                toast(getString(R.string.bahasa_diubah))
+
+                startActivity<LoginActivity>()
+                finish()
+            }
+            negativeButton(getString(R.string.batal)) {
+                it.dismiss()
+            }
+        }.show()
     }
 
     private fun alertLupaPassword() {

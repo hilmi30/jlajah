@@ -18,6 +18,16 @@
             android:layout_height="200dp">
 
             <ImageView
+                android:id="@+id/btn_language"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"
+                android:layout_margin="16dp"
+                android:contentDescription="@string/image_description"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:src="@drawable/icons8_language_60"/>
+
+            <ImageView
                 android:contentDescription="@string/image_description"
                 android:layout_centerInParent="true"
                 android:layout_width="100dp"

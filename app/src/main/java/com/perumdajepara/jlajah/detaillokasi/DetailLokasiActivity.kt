@@ -29,13 +29,10 @@ class DetailLokasiActivity : AppCompatActivity(), DetailLokasiView {
     private val imageData: MutableList<LokasiImage> = mutableListOf()
     private lateinit var imageAdapter: ImageSliderAdapter
     private lateinit var alertLoading: DialogInterface
-    private lateinit var menu: Menu
     private lateinit var database: SQLHelper
 
-    private var userId = 0
     private var idLokasi = 0
     private var count = 0
-    private lateinit var accessToken: String
 
     private var icon: String = ""
 
@@ -58,15 +55,9 @@ class DetailLokasiActivity : AppCompatActivity(), DetailLokasiView {
         database.createTable(LokasiFavoritModel::class)
 
         idLokasi = intent.getIntExtra(ConstantVariable.id, 0)
-        // userpref
-        val userPref = getSharedPreferences(ConstantVariable.userPref, Context.MODE_PRIVATE)
-        // item user pref
-        val codeLang = userPref.getString(ConstantVariable.myLang, "in")
-        userId = userPref.getInt(ConstantVariable.id, 0)
-        accessToken = userPref.getString(ConstantVariable.accessToken, "") as String
 
-        detailLokasiPresenter.getDetailLokasi(this, codeLang as String, idLokasi)
-        detailLokasiPresenter.getReviewByUser(this, idLokasi, accessToken)
+        detailLokasiPresenter.getDetailLokasi(this, getMyLang(this), idLokasi)
+        detailLokasiPresenter.getReviewByUser(this, idLokasi, getToken(this))
 
         btn_tulis_ulasan.onClick {
             startActivity<UlasanActivity>(
@@ -92,8 +83,8 @@ class DetailLokasiActivity : AppCompatActivity(), DetailLokasiView {
         }
 
         swipe_detail_lokasi.setOnRefreshListener {
-            detailLokasiPresenter.getDetailLokasi(this, codeLang, idLokasi)
-            detailLokasiPresenter.getReviewByUser(this, idLokasi, accessToken)
+            detailLokasiPresenter.getDetailLokasi(this, getMyLang(this), idLokasi)
+            detailLokasiPresenter.getReviewByUser(this, idLokasi, getToken(this))
         }
 
         imageAdapter = ImageSliderAdapter(imageData)
@@ -263,6 +254,6 @@ class DetailLokasiActivity : AppCompatActivity(), DetailLokasiView {
         super.onRestart()
         cv_ulasan.hilang()
         btn_tulis_ulasan.hilang()
-        detailLokasiPresenter.getReviewByUser(this, idLokasi, accessToken)
+        detailLokasiPresenter.getReviewByUser(this, idLokasi, getToken(this))
     }
 }

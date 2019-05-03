@@ -50,3 +50,18 @@ fun hideKeyboard(context: Context, view: View) {
     val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
     imm.hideSoftInputFromWindow(view.windowToken, 0)
 }
+
+fun getMyLang(context: Context): String {
+    val userPref = context.getSharedPreferences(ConstantVariable.userPref, Context.MODE_PRIVATE)
+    return userPref.getString(ConstantVariable.myLang, "in") as String
+}
+
+fun getToken(context: Context): String {
+    val userPref = context.getSharedPreferences(ConstantVariable.userPref, Context.MODE_PRIVATE)
+    return userPref.getString(ConstantVariable.accessToken, "") as String
+}
+
+fun getUserID(context: Context): Int {
+    val userPref = context.getSharedPreferences(ConstantVariable.userPref, Context.MODE_PRIVATE)
+    return userPref.getInt(ConstantVariable.id, 0)
+}

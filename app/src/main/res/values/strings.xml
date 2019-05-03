@@ -108,4 +108,10 @@
     <string name="radius" translatable="false">Radius</string>
     <string name="izin_diberikan">Izin diberikan</string>
     <string name="pilih_kategori">Pilih Kategori</string>
+    <string name="masukan_nilai_radius">Masukkan Nilai Radius (meter)</string>
+    <string name="nilai_radius">Nilai radius</string>
+    <string name="anda_melebihi_batas_radius">Anda melebihi batas radius</string>
+    <string name="diperlukan_izin_lokasi">Diperlukan izin akses lokasi anda</string>
+    <string name="izinkan">Izinkan</string>
+    <string name="posisi_anda">Posisi Anda</string>
 </resources>

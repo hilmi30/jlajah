@@ -41,13 +41,8 @@ class AccountFragment : Fragment(), AccountView {
     private lateinit var rootView: View
     private lateinit var submitBtn: TextView
     private var genderId: Int = 1
-    // set presenter
     private val accountPresenter = AccountPresenter()
-    // sharepref
     private lateinit var userPref: SharedPreferences
-    private lateinit var userToken: String
-    private var userId: Int = 0
-    private var lang: String = ConstantVariable.indonesia
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -72,13 +67,9 @@ class AccountFragment : Fragment(), AccountView {
 
         // panggil user pref
         userPref = ctx.getSharedPreferences(ConstantVariable.userPref, Context.MODE_PRIVATE)
-        // get item userpref
-        userToken = userPref.getString(ConstantVariable.accessToken, "") as String
-        userId = userPref.getInt(ConstantVariable.id, 0)
-        lang = userPref.getString(ConstantVariable.myLang, ConstantVariable.indonesia) as String
 
         // cek bahasa default
-        tv_bahasa.text = if (lang == ConstantVariable.indonesia) getString(R.string.indonesia) else getString(R.string.english)
+        tv_bahasa.text = if (getMyLang(ctx) == ConstantVariable.indonesia) getString(R.string.indonesia) else getString(R.string.english)
 
         tv_logout.onClick {
             alert {
@@ -103,7 +94,7 @@ class AccountFragment : Fragment(), AccountView {
         }
 
         tv_ganti_password.onClick {
-            passwordAlert(userToken)
+            passwordAlert()
         }
 
         tv_gender.onClick {
@@ -165,7 +156,7 @@ class AccountFragment : Fragment(), AccountView {
         }.show()
     }
 
-    private fun passwordAlert(userToken: String) {
+    private fun passwordAlert() {
         alertDialog = alert {
             isCancelable = false
             title = getString(R.string.ganti_password)
@@ -203,7 +194,7 @@ class AccountFragment : Fragment(), AccountView {
                                 hideKeyboard(ctx, rootView)
                                 if (validationForm()) {
                                     accountPresenter.resetPassword(
-                                        userToken,
+                                        getToken(ctx),
                                         edtPassLama.text.toString(),
                                         edtPassBaru.text.toString(),
                                         context
@@ -252,7 +243,7 @@ class AccountFragment : Fragment(), AccountView {
                             tag = ConstantVariable.english
                         }
 
-                        check(if (lang == rbIndo.tag) rbIndo.id else rbEng.id)
+                        check(if (getMyLang(ctx) == rbIndo.tag) rbIndo.id else rbEng.id)
                     }
                 }
             }
@@ -386,8 +377,8 @@ class AccountFragment : Fragment(), AccountView {
         when (item.itemId) {
             R.id.simpan -> {
                 accountPresenter.editProfile(
-                    userToken,
-                    userId,
+                    getToken(ctx),
+                    getUserID(ctx),
                     tv_nama_user2.text.toString(),
                     genderId,
                     tv_notelp.text.toString(),
