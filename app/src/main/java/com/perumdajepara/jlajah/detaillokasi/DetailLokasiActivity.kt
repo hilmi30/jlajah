@@ -1,6 +1,6 @@
 package com.perumdajepara.jlajah.detaillokasi
 
-import android.content.Context
+import android.app.Activity
 import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
@@ -17,11 +17,10 @@ import com.perumdajepara.jlajah.model.data.LokasiImage
 import com.perumdajepara.jlajah.model.data.Review
 import com.perumdajepara.jlajah.ulasan.UlasanActivity
 import com.perumdajepara.jlajah.util.*
-import hinl.kotlin.database.helper.Database
 import kotlinx.android.synthetic.main.activity_detail_lokasi.*
 import org.jetbrains.anko.*
 import org.jetbrains.anko.sdk27.coroutines.onClick
-import org.jetbrains.anko.support.v4.alert
+
 
 class DetailLokasiActivity : AppCompatActivity(), DetailLokasiView {
 
@@ -35,6 +34,8 @@ class DetailLokasiActivity : AppCompatActivity(), DetailLokasiView {
     private var count = 0
 
     private var icon: String = ""
+    private val ulasanCode = 104
+    private var ulasanDiEdit = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,19 +61,23 @@ class DetailLokasiActivity : AppCompatActivity(), DetailLokasiView {
         detailLokasiPresenter.getReviewByUser(this, idLokasi, getToken(this))
 
         btn_tulis_ulasan.onClick {
-            startActivity<UlasanActivity>(
-                ConstantVariable.id to idLokasi,
-                ConstantVariable.review to "",
-                ConstantVariable.rating to 1
-            )
+            val intent = Intent(applicationContext, UlasanActivity::class.java)
+            intent.apply {
+                putExtra(ConstantVariable.id, idLokasi)
+                putExtra(ConstantVariable.review, "")
+                putExtra(ConstantVariable.rating, 1)
+            }
+            startActivityForResult(intent, ulasanCode)
         }
 
         tv_edit_ulasan.onClick {
-            startActivity<UlasanActivity>(
-                ConstantVariable.id to idLokasi,
-                ConstantVariable.review to tv_deskripsi_review.text.toString(),
-                ConstantVariable.rating to rating_review.rating.toInt()
-            )
+            val intent = Intent(applicationContext, UlasanActivity::class.java)
+            intent.apply {
+                putExtra(ConstantVariable.id, idLokasi)
+                putExtra(ConstantVariable.review, tv_deskripsi_review.text.toString())
+                putExtra(ConstantVariable.rating, rating_review.rating.toInt())
+            }
+            startActivityForResult(intent, ulasanCode)
         }
 
         tv_lihat_ulasan.onClick {
@@ -95,6 +100,23 @@ class DetailLokasiActivity : AppCompatActivity(), DetailLokasiView {
         pageindicator_image_lokasi.apply {
             setViewPager(pager_detail_lokasi)
             radius = 5 * density
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when (requestCode) {
+            ulasanCode -> {
+                if (resultCode == Activity.RESULT_OK && data != null) {
+                    ulasanDiEdit = data.getBooleanExtra(ConstantVariable.status, false)
+
+                    if (ulasanDiEdit) {
+                        cv_ulasan.hilang()
+                        btn_tulis_ulasan.hilang()
+                        detailLokasiPresenter.getReviewByUser(this, idLokasi, getToken(this))
+                    }
+                }
+            }
         }
     }
 
@@ -241,6 +263,7 @@ class DetailLokasiActivity : AppCompatActivity(), DetailLokasiView {
                     toast(getString(R.string.lokasi_dihapus_bookmark))
                 }
             }
+            else -> onBackPressed()
         }
         return true
     }
@@ -248,12 +271,5 @@ class DetailLokasiActivity : AppCompatActivity(), DetailLokasiView {
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true
-    }
-
-    override fun onRestart() {
-        super.onRestart()
-        cv_ulasan.hilang()
-        btn_tulis_ulasan.hilang()
-        detailLokasiPresenter.getReviewByUser(this, idLokasi, getToken(this))
     }
 }

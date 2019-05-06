@@ -1,12 +1,15 @@
 package com.perumdajepara.jlajah.ulasan
 
+import android.app.Activity
 import android.content.Context
 import android.content.DialogInterface
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.perumdajepara.jlajah.R
+import com.perumdajepara.jlajah.detaillokasi.DetailLokasiActivity
 import com.perumdajepara.jlajah.util.ConstantVariable
 import com.perumdajepara.jlajah.util.getToken
 import com.perumdajepara.jlajah.util.showAlert
@@ -18,6 +21,7 @@ class UlasanActivity : AppCompatActivity(), UlasanView {
     private val ulasanPresenter = UlasanPresenter()
     private lateinit var alertLoading: DialogInterface
     private var idLocation = 0
+    private var status = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,11 +57,13 @@ class UlasanActivity : AppCompatActivity(), UlasanView {
     }
 
     override fun suksesReview() {
+        status = true
         alert {
+            isCancelable = false
             message = getString(R.string.review_ditambah)
             negativeButton(R.string.tutup) {
                 it.dismiss()
-                finish()
+                setResult()
             }
         }.show()
     }
@@ -98,8 +104,20 @@ class UlasanActivity : AppCompatActivity(), UlasanView {
         val rating = rating_click_detail_lokasi.rating.toInt()
         when (item?.itemId) {
             R.id.posting -> ulasanPresenter.addReview(this, idLocation, getToken(this), tv_ulasan.text.toString(), rating)
-            else -> finish()
+            else -> setResult()
         }
         return true
+    }
+
+    private fun setResult() {
+        val intent = Intent(applicationContext, DetailLokasiActivity::class.java)
+        intent.putExtra(ConstantVariable.status, status)
+        setResult(Activity.RESULT_OK, intent)
+        finish()
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        setResult()
     }
 }

@@ -14,10 +14,7 @@ import com.perumdajepara.jlajah.detaillokasi.DetailLokasiActivity
 import com.perumdajepara.jlajah.lokasibycategory.LokasiByCategoryAdapter
 import com.perumdajepara.jlajah.model.LokasiFavoritModel
 import com.perumdajepara.jlajah.model.data.Lokasi
-import com.perumdajepara.jlajah.util.ItemDecoration
-import com.perumdajepara.jlajah.util.SQLHelper
-import com.perumdajepara.jlajah.util.hilang
-import com.perumdajepara.jlajah.util.terlihat
+import com.perumdajepara.jlajah.util.*
 import kotlinx.android.synthetic.main.fragment_bookmark.*
 import org.jetbrains.anko.support.v4.alert
 import org.jetbrains.anko.support.v4.ctx
@@ -53,7 +50,9 @@ class BookmarkFragment : Fragment() {
         favoritData.addAll(favorit)
 
         adapterLokasi = BookmarkAdapter(favoritData) {
-            startActivity<DetailLokasiActivity>()
+            startActivity<DetailLokasiActivity>(
+                ConstantVariable.id to it.idLokasi
+            )
         }
 
         rv_bookmark.apply {
