@@ -89,4 +89,8 @@
     <string name="izinkan">Allow it</string>
     <string name="masukan_nilai_radius">Enter Radius Value (meter)</string>
     <string name="nilai_radius">Radius value</string>
+    <string name="pilih_kategori">Choose Category</string>
+    <string name="posisi_anda">Your Position</string>
+    <string name="lokasi_tidak_aktif">Location Off</string>
+    <string name="perangkat_belum_terdeteksi_lokasi_aktif">Your detected device has not activated the location</string>
 </resources>

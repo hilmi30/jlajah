@@ -1,6 +1,7 @@
 package com.perumdajepara.jlajah.bookmark
 
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -16,10 +17,7 @@ import com.perumdajepara.jlajah.model.LokasiFavoritModel
 import com.perumdajepara.jlajah.model.data.Lokasi
 import com.perumdajepara.jlajah.util.*
 import kotlinx.android.synthetic.main.fragment_bookmark.*
-import org.jetbrains.anko.support.v4.alert
-import org.jetbrains.anko.support.v4.ctx
-import org.jetbrains.anko.support.v4.startActivity
-import org.jetbrains.anko.support.v4.toast
+import org.jetbrains.anko.support.v4.*
 
 class BookmarkFragment : Fragment() {
 
@@ -27,6 +25,7 @@ class BookmarkFragment : Fragment() {
     private var favoritData: MutableList<LokasiFavoritModel> = mutableListOf()
     private lateinit var favorit: List<LokasiFavoritModel>
     private lateinit var adapterLokasi: BookmarkAdapter
+    private val detailLokasiCode = 101
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,16 +43,16 @@ class BookmarkFragment : Fragment() {
 
         favorit = database.get(LokasiFavoritModel::class) as List<LokasiFavoritModel>
 
-        cekDataKosong()
-
         favoritData.clear()
         favoritData.addAll(favorit)
 
         adapterLokasi = BookmarkAdapter(favoritData) {
-            startActivity<DetailLokasiActivity>(
-                ConstantVariable.id to it.idLokasi
-            )
+            val intent = Intent(context, DetailLokasiActivity::class.java)
+            intent.putExtra(ConstantVariable.id, it.idLokasi)
+            startActivityForResult(intent, detailLokasiCode)
         }
+
+        cekDataKosong()
 
         rv_bookmark.apply {
             adapter = adapterLokasi
@@ -91,17 +90,27 @@ class BookmarkFragment : Fragment() {
         touchHelper.attachToRecyclerView(rv_bookmark)
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when (requestCode) {
+            detailLokasiCode -> {
+                cekDataKosong()
+            }
+        }
+    }
+
     private fun cekDataKosong() {
-        if ((favorit).isEmpty()) tv_bookmark_kosong.terlihat() else tv_bookmark_kosong.hilang()
+        val favorit = database.get(LokasiFavoritModel::class)
+        favoritData.clear()
+        favoritData.addAll(favorit as List<LokasiFavoritModel>)
+        adapterLokasi.notifyDataSetChanged()
+        if ((favoritData).isEmpty()) tv_bookmark_kosong.terlihat() else tv_bookmark_kosong.hilang()
     }
 
     override fun onHiddenChanged(hidden: Boolean) {
         super.onHiddenChanged(hidden)
         if (!hidden) {
-            val favorit = database.get(LokasiFavoritModel::class)
-            favoritData.clear()
-            favoritData.addAll(favorit as List<LokasiFavoritModel>)
-            adapterLokasi.notifyDataSetChanged()
+            cekDataKosong()
         }
     }
 }

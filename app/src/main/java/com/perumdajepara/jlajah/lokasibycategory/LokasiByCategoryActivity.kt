@@ -106,7 +106,7 @@ class LokasiByCategoryActivity : AppCompatActivity(), LokasiByCategoryView {
                     category = idCategory
                 )
 
-                hideKeyboard(ctx, rootView)
+                hideKeyboard(this, rootView)
                 return@setOnKeyListener true
             }
             false

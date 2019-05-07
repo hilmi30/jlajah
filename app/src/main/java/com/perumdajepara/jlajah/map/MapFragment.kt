@@ -28,6 +28,8 @@ import com.google.android.gms.maps.model.*
 import com.perumdajepara.jlajah.R
 import kotlinx.android.synthetic.main.fragment_map.*
 import com.google.maps.android.SphericalUtil
+import com.nabinbhandari.android.permissions.PermissionHandler
+import com.nabinbhandari.android.permissions.Permissions
 import com.perumdajepara.jlajah.model.data.Category
 import com.perumdajepara.jlajah.model.data.Lokasi
 import com.perumdajepara.jlajah.util.ConstantVariable
@@ -39,6 +41,8 @@ import org.jetbrains.anko.sdk27.coroutines.onClick
 import org.jetbrains.anko.support.v4.alert
 import org.jetbrains.anko.support.v4.ctx
 import org.jetbrains.anko.support.v4.toast
+import java.security.Permission
+import java.util.ArrayList
 
 class MapFragment : Fragment(), OnMapReadyCallback, MapView {
 
@@ -58,6 +62,11 @@ class MapFragment : Fragment(), OnMapReadyCallback, MapView {
 
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var locationManager: LocationManager
+
+    private val permissions = arrayOf(
+        Manifest.permission.ACCESS_FINE_LOCATION,
+        Manifest.permission.ACCESS_COARSE_LOCATION
+    )
 
     private var fragHidden = true
     private var gpsEnabled = false
@@ -146,8 +155,8 @@ class MapFragment : Fragment(), OnMapReadyCallback, MapView {
             } else {
                 alert {
                     isCancelable = false
-                    title = "Lokasi Tidak Aktif"
-                    message = "Perangkat anda terdeteksi belum mengaktifkan lokasi"
+                    title = getString(R.string.lokasi_tidak_aktif)
+                    message = getString(R.string.perangkat_belum_terdeteksi_lokasi_aktif)
                     okButton {
                         it.dismiss()
                     }
@@ -161,7 +170,12 @@ class MapFragment : Fragment(), OnMapReadyCallback, MapView {
                     it.dismiss()
                 }
                 positiveButton(getString(R.string.izinkan)) {
-                    setCurrentLocation()
+
+                    Permissions.check(context, permissions, null, null, object : PermissionHandler() {
+                        override fun onGranted() {
+                            setCurrentLocation()
+                        }
+                    })
                 }
             }.show()
         }

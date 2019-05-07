@@ -139,6 +139,7 @@ class HomeFragment : Fragment(), HomeView {
 
     override fun showLokasiPopulerLoading() {
         pb_lokasi_populer.terlihat()
+        lyt_error_lokasi_populer.hilang()
     }
 
     override fun hideLokasiPopulerLoading() {

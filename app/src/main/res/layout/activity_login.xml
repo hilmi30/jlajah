@@ -23,8 +23,8 @@
                 android:layout_alignParentTop="true"
                 android:layout_margin="16dp"
                 android:contentDescription="@string/image_description"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:src="@drawable/icons8_language_60"/>
 
             <ImageView

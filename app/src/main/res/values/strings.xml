@@ -114,4 +114,6 @@
     <string name="diperlukan_izin_lokasi">Diperlukan izin akses lokasi anda</string>
     <string name="izinkan">Izinkan</string>
     <string name="posisi_anda">Posisi Anda</string>
+    <string name="lokasi_tidak_aktif">Lokasi Tidak Aktif</string>
+    <string name="perangkat_belum_terdeteksi_lokasi_aktif">Perangkat anda terdeteksi belum mengaktifkan lokasi</string>
 </resources>

@@ -63,7 +63,7 @@ class CariLokasiActivity : AppCompatActivity(), CariLokasiView {
                     codeLanguage = getMyLang(this)
                 )
 
-                hideKeyboard(ctx, rootView)
+                hideKeyboard(this, rootView)
                 return@setOnKeyListener true
             }
             false
