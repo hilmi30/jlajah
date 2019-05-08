@@ -46,7 +46,7 @@
     <string name="yakin_hapus_lokasi">Yakin ingin menghapus Lokasi?</string>
     <string name="ya">Ya</string>
     <string name="tidak">Tidak</string>
-    <string name="geser_kiri_kanan">Geser item ke kiri atau kanan untuk menghapus dari daftar bookmark</string>
+    <string name="geser_kiri_kanan">Geser item ke kiri atau kanan untuk menghapus dari daftar bookmark. Geser ke bawah untuk segarkan</string>
     <string name="share">Bagikan</string>
     <string name="unbookmark" translatable="false">Unbookmark</string>
     <string name="email" translatable="false">Email</string>
@@ -116,4 +116,5 @@
     <string name="posisi_anda">Posisi Anda</string>
     <string name="lokasi_tidak_aktif">Lokasi Tidak Aktif</string>
     <string name="perangkat_belum_terdeteksi_lokasi_aktif">Perangkat anda terdeteksi belum mengaktifkan lokasi</string>
+    <string name="hapus_berhasil">Hapus Berhasil</string>
 </resources>

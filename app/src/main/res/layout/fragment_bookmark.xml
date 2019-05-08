@@ -15,15 +15,6 @@
         android:layout_alignParentTop="true"
         android:padding="16dp"/>
 
-    <TextView
-        android:id="@+id/tv_data_kosong"
-        android:visibility="invisible"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:textAlignment="center"
-        android:text="@string/bookmark_kosong"/>
-
     <androidx.cardview.widget.CardView
         android:layout_below="@id/img_bookmark_logo"
         android:id="@+id/cv_cara_hapus"
@@ -45,23 +36,13 @@
 
     </androidx.cardview.widget.CardView>
 
-    <TextView
-        android:visibility="gone"
-        android:id="@+id/tv_bookmark_kosong"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/tidak_ada_lokasi_yang_ditandai"
-        android:layout_centerInParent="true"
-        android:textAlignment="center"
-        android:textSize="15sp"/>
-
-    <androidx.cardview.widget.CardView
-        android:layout_below="@id/cv_cara_hapus"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:layout_marginStart="@dimen/delapan"
         android:layout_marginEnd="@dimen/delapan"
         android:layout_marginBottom="@dimen/delapan"
         android:layout_marginTop="4dp"
-        app:cardCornerRadius="@dimen/delapan"
+        android:id="@+id/swipe_bookmark"
+        android:layout_below="@id/cv_cara_hapus"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -72,6 +53,16 @@
 
         </androidx.recyclerview.widget.RecyclerView>
 
-    </androidx.cardview.widget.CardView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+    <TextView
+        android:visibility="gone"
+        android:id="@+id/tv_bookmark_kosong"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/tidak_ada_lokasi_yang_ditandai"
+        android:layout_centerInParent="true"
+        android:textAlignment="center"
+        android:textSize="15sp"/>
 
 </RelativeLayout>

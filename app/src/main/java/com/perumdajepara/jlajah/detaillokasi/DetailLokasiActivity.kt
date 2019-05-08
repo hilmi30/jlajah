@@ -28,7 +28,6 @@ class DetailLokasiActivity : AppCompatActivity(), DetailLokasiView {
     private val imageData: MutableList<LokasiImage> = mutableListOf()
     private lateinit var imageAdapter: ImageSliderAdapter
     private lateinit var alertLoading: DialogInterface
-    private lateinit var database: SQLHelper
 
     private var idLokasi = 0
     private var count = 0
@@ -52,13 +51,11 @@ class DetailLokasiActivity : AppCompatActivity(), DetailLokasiView {
             setDisplayHomeAsUpEnabled(true)
         }
 
-        database = SQLHelper(this)
-        database.createTable(LokasiFavoritModel::class)
-
-        idLokasi = intent.getIntExtra(ConstantVariable.id, 0)
+         idLokasi = intent.getIntExtra(ConstantVariable.id, 0)
 
         detailLokasiPresenter.getDetailLokasi(this, getMyLang(this), idLokasi)
         detailLokasiPresenter.getReviewByUser(this, idLokasi, getToken(this))
+        detailLokasiPresenter.cekBookmark(this, getToken(this), idLokasi)
 
         btn_tulis_ulasan.onClick {
             val intent = Intent(applicationContext, UlasanActivity::class.java)
@@ -101,6 +98,17 @@ class DetailLokasiActivity : AppCompatActivity(), DetailLokasiView {
             setViewPager(pager_detail_lokasi)
             radius = 5 * density
         }
+
+        btn_bookmark.onClick {
+            when (count) {
+                1 -> {
+                    detailLokasiPresenter.deleteBookmark(this@DetailLokasiActivity, idLokasi, getToken(this@DetailLokasiActivity))
+                }
+                else -> {
+                    detailLokasiPresenter.addBookmark(this@DetailLokasiActivity, getToken(this@DetailLokasiActivity), idLokasi)
+                }
+            }
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -133,6 +141,7 @@ class DetailLokasiActivity : AppCompatActivity(), DetailLokasiView {
     override fun error(msg: String) {
         showAlert(this, msg)
         swipe_detail_lokasi.isRefreshing = false
+        btn_bookmark.hilang()
     }
 
     override fun showLoading() {
@@ -224,48 +233,24 @@ class DetailLokasiActivity : AppCompatActivity(), DetailLokasiView {
         btn_tulis_ulasan.terlihat()
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_detail_lokasi, menu)
-
-        count = database.count(LokasiFavoritModel::class) {
-            eq("id_lokasi", idLokasi)
-        }
-
-        if (count == 1)
-            menu?.getItem(0)?.icon = ContextCompat.getDrawable(this, R.drawable.ic_bookmark_black_24dp)
-        else
-            menu?.getItem(0)?.icon = ContextCompat.getDrawable(this, R.drawable.ic_bookmark_border_black_24dp)
-
-        return true
+    override fun suksesBookmark() {
+        toast(getString(R.string.lokasi_ditambahkan_bookmark))
+        detailLokasiPresenter.cekBookmark(this, getToken(this), idLokasi)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        when (item?.itemId) {
-            R.id.bookmark -> {
+    override fun suksesDelete() {
+        toast(R.string.lokasi_dihapus_bookmark)
+        detailLokasiPresenter.cekBookmark(this, getToken(this), idLokasi)
+    }
 
-                if (count == 0) {
-                    val favorit = LokasiFavoritModel(
-                        locationName = tv_nama_lokasi.text.toString(),
-                        alamat = tv_alamat_lokasi.text.toString(),
-                        icon = icon,
-                        idLokasi = idLokasi
-                    )
-
-                    database.insert(favorit)
-                    invalidateOptionsMenu()
-                    toast(getString(R.string.lokasi_ditambahkan_bookmark))
-                } else {
-                    val lokasi = database.get(LokasiFavoritModel::class) {
-                        eq("id_lokasi", idLokasi)
-                    }
-                    lokasi?.get(0)?.let { database.delete(it) }
-                    invalidateOptionsMenu()
-                    toast(getString(R.string.lokasi_dihapus_bookmark))
-                }
-            }
-            else -> onBackPressed()
+    override fun cekBookmark(count: Int) {
+        this.count = count
+        if (count == 1) {
+            btn_bookmark.setImageResource(R.drawable.ic_bookmark_black_24dp)
+        } else {
+            btn_bookmark.setImageResource(R.drawable.ic_bookmark_border_black_24dp)
         }
-        return true
+        btn_bookmark.terlihat()
     }
 
     override fun onSupportNavigateUp(): Boolean {

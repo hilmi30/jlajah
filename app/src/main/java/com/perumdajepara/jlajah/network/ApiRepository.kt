@@ -110,4 +110,27 @@ interface ApiRepository {
         @Query("code_language") codeLanguage: String
     ): Observable<LokasiPopulerModel>
 
+    @POST("bookmark/addbookmark")
+    fun addBookmark(
+        @Query("access-token") accessToken: String,
+        @Query("location_id") locationId: Int
+    ): Observable<BookmarkModel>
+
+    @POST("bookmark/deletebookmark")
+    fun deleteBookmark(
+        @Query("access-token") accessToken: String,
+        @Query("location_id") locationId: Int
+    ): Observable<BookmarkModel>
+
+    @GET("bookmark/cekbookmark")
+    fun cekBookmark(
+        @Query("access-token") accessToken: String,
+        @Query("location_id") locationId: Int
+    ): Observable<BookmarkModel>
+
+    @GET("bookmark/getbookmarkbyuser")
+    fun getBookmarkByUser(
+        @Query("access-token") accessToken: String,
+        @Query("code_language") codeLanguage: String
+    ): Observable<BookmarkModel>
 }

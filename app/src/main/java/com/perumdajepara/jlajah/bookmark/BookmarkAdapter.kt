@@ -11,7 +11,7 @@ import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.item_lokasi_by_kategori.view.*
 import org.jetbrains.anko.sdk27.coroutines.onClick
 
-class BookmarkAdapter(private val data: List<LokasiFavoritModel>, private val listener: (LokasiFavoritModel) -> Unit)
+class BookmarkAdapter(private val data: List<Lokasi>, private val listener: (Lokasi) -> Unit)
     : RecyclerView.Adapter<BookmarkAdapter.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_lokasi_by_kategori, parent, false))
@@ -25,7 +25,7 @@ class BookmarkAdapter(private val data: List<LokasiFavoritModel>, private val li
     }
 
     class ViewHolder(private val v: View): RecyclerView.ViewHolder(v) {
-        fun bindItem(data: LokasiFavoritModel, listener: (LokasiFavoritModel) -> Unit) {
+        fun bindItem(data: Lokasi, listener: (Lokasi) -> Unit) {
 
             Picasso.get().load(data.icon).placeholder(R.drawable.kategori_placeholder).error(R.drawable.kategori_placeholder)
                 .into(v.img_lokasi_kategori)

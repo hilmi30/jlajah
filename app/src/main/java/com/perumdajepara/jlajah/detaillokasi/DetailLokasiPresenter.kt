@@ -80,4 +80,74 @@ class DetailLokasiPresenter: BasePresenter<DetailLokasiView> {
                 }
             )
     }
+
+    fun cekBookmark(context: Context, accessToken: String, idLocation: Int) {
+        disposable = services.cekBookmark(accessToken = accessToken, locationId = idLocation)
+            .debounce(100, TimeUnit.MILLISECONDS)
+            .timeout(10, TimeUnit.SECONDS)
+            .subscribeOn(Schedulers.newThread())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeBy(
+                onNext = {
+                    mView?.cekBookmark(it.count)
+                },
+                onError = {
+                    if (it is HttpException) mView?.error(context.getString(R.string.terjadi_kesalahan))
+                    if (it is UnknownHostException || it is TimeoutException) mView?.error(context.getString(R.string.cek_koneksi))
+                },
+                onComplete = {
+                    //
+                }
+            )
+    }
+
+    fun addBookmark(context: Context, accessToken: String, idLocation: Int) {
+        mView?.showLoading()
+        disposable = services.addBookmark(accessToken = accessToken, locationId = idLocation)
+            .debounce(100, TimeUnit.MILLISECONDS)
+            .timeout(10, TimeUnit.SECONDS)
+            .subscribeOn(Schedulers.newThread())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeBy(
+                onNext = {
+                    mView?.suksesBookmark()
+                },
+                onError = {
+                    if (it is HttpException) mView?.error(context.getString(R.string.terjadi_kesalahan))
+                    if (it is UnknownHostException || it is TimeoutException) mView?.error(context.getString(R.string.cek_koneksi))
+                    mView?.hideLoading()
+                },
+                onComplete = {
+                    mView?.hideLoading()
+                }
+            )
+    }
+
+    fun deleteBookmark(context: Context, idLocation: Int, token: String) {
+        mView?.showLoading()
+        disposable = services.deleteBookmark(accessToken = token, locationId = idLocation)
+            .debounce(100, TimeUnit.MILLISECONDS)
+            .timeout(10, TimeUnit.SECONDS)
+            .subscribeOn(Schedulers.newThread())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeBy(
+                onNext = {
+                    if (it.statusCode == 200) {
+                        mView?.suksesDelete()
+                    } else {
+                        mView?.error(context.getString(R.string.terjadi_kesalahan))
+                    }
+                    mView?.hideLoading()
+                },
+                onError = {
+                    if (it is HttpException) mView?.error(context.getString(R.string.terjadi_kesalahan))
+                    if (it is UnknownHostException || it is TimeoutException) mView?.error(context.getString(R.string.cek_koneksi))
+
+                    mView?.hideLoading()
+                },
+                onComplete = {
+                    mView?.hideLoading()
+                }
+            )
+    }
 }

@@ -33,7 +33,7 @@
     <string name="hapus_lokasi">Delete Location</string>
     <string name="yakin_hapus_lokasi">Are you sure you want to delete Location?</string>
     <string name="ya">Yes</string>
-    <string name="geser_kiri_kanan">Swipe items left or right to delete from the bookmark list</string>
+    <string name="geser_kiri_kanan">Swipe items left or right to delete from the bookmark list. Swipe down to refresh</string>
     <string name="share">Share</string>
     <string name="lupa_password">Forgot the password?</string>
     <string name="masuk">Login</string>
@@ -82,7 +82,7 @@
     <string name="filter">Location Filter</string>
     <string name="lokasi_dihapus_bookmark">Location deleted from bookmark</string>
     <string name="lokasi_ditambahkan_bookmark">Location added from bookmark</string>
-    <string name="tidak_ada_lokasi_yang_ditandai">No location marked</string>
+    <string name="tidak_ada_lokasi_yang_ditandai">No location marked.\nSwipe down to refresh</string>
     <string name="anda_melebihi_batas_radius">You exceed the radius limit</string>
     <string name="diperlukan_izin_lokasi">Access permission for your location is required</string>
     <string name="izin_diberikan">Permission granted</string>
@@ -93,4 +93,5 @@
     <string name="posisi_anda">Your Position</string>
     <string name="lokasi_tidak_aktif">Location Off</string>
     <string name="perangkat_belum_terdeteksi_lokasi_aktif">Your detected device has not activated the location</string>
+    <string name="hapus_berhasil">Delete Success</string>
 </resources>

@@ -12,20 +12,21 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.perumdajepara.jlajah.R
 import com.perumdajepara.jlajah.detaillokasi.DetailLokasiActivity
-import com.perumdajepara.jlajah.lokasibycategory.LokasiByCategoryAdapter
 import com.perumdajepara.jlajah.model.LokasiFavoritModel
 import com.perumdajepara.jlajah.model.data.Lokasi
 import com.perumdajepara.jlajah.util.*
 import kotlinx.android.synthetic.main.fragment_bookmark.*
+import org.jetbrains.anko.alert
 import org.jetbrains.anko.support.v4.*
 
-class BookmarkFragment : Fragment() {
+class BookmarkFragment : Fragment(), BookmarkView {
 
     private lateinit var database: SQLHelper
-    private var favoritData: MutableList<LokasiFavoritModel> = mutableListOf()
+    private var favoritData: MutableList<Lokasi> = mutableListOf()
     private lateinit var favorit: List<LokasiFavoritModel>
     private lateinit var adapterLokasi: BookmarkAdapter
     private val detailLokasiCode = 101
+    private val bookmarkPresenter = BookmarkPresenter()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,22 +38,72 @@ class BookmarkFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        onAttachView()
+    }
 
-        database = SQLHelper(ctx)
-        database.createTable(LokasiFavoritModel::class)
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when (requestCode) {
+            detailLokasiCode -> {
+                bookmarkPresenter.getBookmarkByUser(context = ctx, token = getToken(ctx), codeLang = getMyLang(ctx))
+            }
+        }
+    }
 
-        favorit = database.get(LokasiFavoritModel::class) as List<LokasiFavoritModel>
+    override fun showLoading() {
+        swipe_bookmark.isRefreshing = true
+    }
 
+    override fun hideLoading() {
+        swipe_bookmark.isRefreshing = false
+    }
+
+    override fun showData(items: List<Lokasi>) {
         favoritData.clear()
-        favoritData.addAll(favorit)
+        favoritData.addAll(items)
+        adapterLokasi.notifyDataSetChanged()
+    }
+
+    override fun error(msg: String) {
+        alert {
+            isCancelable = false
+            message = msg
+            positiveButton(getString(R.string.coba_lagi)) {
+                bookmarkPresenter.getBookmarkByUser(context = ctx, token = getToken(ctx), codeLang = getMyLang(ctx))
+            }
+            negativeButton(getString(R.string.tutup)) {
+                it.dismiss()
+            }
+        }.show()
+    }
+
+    override fun suksesDelete(msg: String) {
+        showAlert(ctx, msg)
+        bookmarkPresenter.getBookmarkByUser(ctx, getToken(ctx), getMyLang(ctx))
+    }
+
+    override fun showDataKosong() {
+        tv_bookmark_kosong.terlihat()
+    }
+
+    override fun hideDataKosong() {
+        tv_bookmark_kosong.hilang()
+    }
+
+    override fun onAttachView() {
+        bookmarkPresenter.onAttach(this)
+
+        bookmarkPresenter.getBookmarkByUser(ctx, getToken(ctx), getMyLang(ctx))
+
+        swipe_bookmark.setOnRefreshListener {
+            bookmarkPresenter.getBookmarkByUser(ctx, getToken(ctx), getMyLang(ctx))
+        }
 
         adapterLokasi = BookmarkAdapter(favoritData) {
             val intent = Intent(context, DetailLokasiActivity::class.java)
-            intent.putExtra(ConstantVariable.id, it.idLokasi)
+            intent.putExtra(ConstantVariable.id, it.id.toInt())
             startActivityForResult(intent, detailLokasiCode)
         }
-
-        cekDataKosong()
 
         rv_bookmark.apply {
             adapter = adapterLokasi
@@ -71,11 +122,8 @@ class BookmarkFragment : Fragment() {
                     title = getString(R.string.hapus_lokasi)
                     message = getString(R.string.yakin_hapus_lokasi)
                     positiveButton(getString(R.string.ya)) {
-                        val item = favoritData[position]
-                        database.delete(item)
-                        favoritData.removeAt(position)
-                        adapterLokasi.notifyDataSetChanged()
-                        cekDataKosong()
+                        bookmarkPresenter.deleteBookmark(ctx, favoritData[position].id.toInt(), getToken(ctx))
+
                     }
                     negativeButton(getString(R.string.tidak)) {
                         adapterLokasi.notifyItemChanged(position)
@@ -83,34 +131,18 @@ class BookmarkFragment : Fragment() {
                     }
                 }.show()
             }
-
         }
 
         val touchHelper = ItemTouchHelper(swipeToDeleteCallback)
         touchHelper.attachToRecyclerView(rv_bookmark)
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        when (requestCode) {
-            detailLokasiCode -> {
-                cekDataKosong()
-            }
-        }
+    override fun onDetachView() {
+        bookmarkPresenter.onDetach()
     }
 
-    private fun cekDataKosong() {
-        val favorit = database.get(LokasiFavoritModel::class)
-        favoritData.clear()
-        favoritData.addAll(favorit as List<LokasiFavoritModel>)
-        adapterLokasi.notifyDataSetChanged()
-        if ((favoritData).isEmpty()) tv_bookmark_kosong.terlihat() else tv_bookmark_kosong.hilang()
-    }
-
-    override fun onHiddenChanged(hidden: Boolean) {
-        super.onHiddenChanged(hidden)
-        if (!hidden) {
-            cekDataKosong()
-        }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        onDetachView()
     }
 }

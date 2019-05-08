@@ -13,4 +13,7 @@ interface DetailLokasiView: BaseView {
     fun hideReviewLoading()
     fun showReview(data: Review)
     fun hideReview()
+    fun suksesDelete()
+    fun cekBookmark(count: Int)
+    fun suksesBookmark()
 }
