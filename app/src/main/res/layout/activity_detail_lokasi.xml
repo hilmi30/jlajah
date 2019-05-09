@@ -242,6 +242,7 @@
                     android:layout_height="wrap_content">
 
                     <TextView
+                        android:id="@+id/tv_kunjungi_kami"
                         android:padding="@dimen/enambelas"
                         android:gravity="center_vertical"
                         android:drawableStart="@drawable/ic_language_black_24dp"

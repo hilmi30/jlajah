@@ -1,6 +1,7 @@
 package com.perumdajepara.jlajah.detaillokasi
 
 import android.app.Activity
+import android.content.ActivityNotFoundException
 import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
@@ -82,6 +83,17 @@ class DetailLokasiActivity : AppCompatActivity(), DetailLokasiView {
                 ConstantVariable.id to idLokasi,
                 ConstantVariable.fullName to tv_nama_lokasi.text.toString()
             )
+        }
+
+        tv_kunjungi_kami.onClick {
+            try {
+                val intent = packageManager.getLaunchIntentForPackage("com.perusdajepara.jeparaadvertiser")
+                startActivity(intent)
+            } catch (e: ActivityNotFoundException) {
+                val market = Uri.parse("market://details?id=com.perusdajepara.jeparaadvertiser")
+                val intent = Intent(Intent.ACTION_VIEW, market)
+                startActivity(intent)
+            }
         }
 
         swipe_detail_lokasi.setOnRefreshListener {
