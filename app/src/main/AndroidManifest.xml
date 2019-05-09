@@ -44,7 +44,7 @@
         <activity android:name=".ulasan.UlasanActivity" />
         <activity
             android:name=".detaillokasi.DetailLokasiActivity"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize"/>
         <activity
             android:name=".lokasibycategory.LokasiByCategoryActivity"
             android:screenOrientation="portrait"

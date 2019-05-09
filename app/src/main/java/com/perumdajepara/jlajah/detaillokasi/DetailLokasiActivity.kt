@@ -87,7 +87,8 @@ class DetailLokasiActivity : AppCompatActivity(), DetailLokasiView {
 
         tv_kunjungi_kami.onClick {
             try {
-                val intent = packageManager.getLaunchIntentForPackage("com.perusdajepara.jeparaadvertiser")
+                val intent = packageManager.getLaunchIntentForPackage("com.perumdajepara.tesjlajah")
+                intent?.putExtra("testing", "mantab")
                 startActivity(intent)
             } catch (e: ActivityNotFoundException) {
                 val market = Uri.parse("market://details?id=com.perusdajepara.jeparaadvertiser")
