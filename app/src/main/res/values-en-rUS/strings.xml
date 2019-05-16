@@ -94,4 +94,5 @@
     <string name="lokasi_tidak_aktif">Location Off</string>
     <string name="perangkat_belum_terdeteksi_lokasi_aktif">Your detected device has not activated the location</string>
     <string name="hapus_berhasil">Delete Success</string>
+    <string name="aktifkan">Activate it</string>
 </resources>

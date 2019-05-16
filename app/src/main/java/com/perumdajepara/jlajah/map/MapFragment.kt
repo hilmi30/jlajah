@@ -3,14 +3,17 @@ package com.perumdajepara.jlajah.map
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
 import android.content.DialogInterface
+import android.content.IntentSender
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.location.LocationManager
 import android.os.Bundle
 import android.text.InputType
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,8 +21,8 @@ import android.widget.EditText
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationServices
+import com.google.android.gms.common.api.GoogleApiClient
+import com.google.android.gms.location.*
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -34,6 +37,7 @@ import com.perumdajepara.jlajah.model.data.Category
 import com.perumdajepara.jlajah.model.data.Lokasi
 import com.perumdajepara.jlajah.util.ConstantVariable
 import com.perumdajepara.jlajah.util.ItemDecoration
+import com.perumdajepara.jlajah.util.displayLocationSettingRequest
 import com.perumdajepara.jlajah.util.getMyLang
 import org.jetbrains.anko.*
 import org.jetbrains.anko.recyclerview.v7.recyclerView
@@ -103,6 +107,8 @@ class MapFragment : Fragment(), OnMapReadyCallback, MapView {
     override fun onAttachView() {
         mapPresenter.onAttach(this)
 
+        setItemMap(myPos.latitude, myPos.longitude)
+
         tv_radius.text = "Radius: ${radius.toInt()} m"
 
         mapPresenter.getAllCategory(
@@ -113,6 +119,7 @@ class MapFragment : Fragment(), OnMapReadyCallback, MapView {
         kategoriMarkerAdapter = KategoriMarkerAdapter(kategoriMarkerData) {
             alertInterface.dismiss()
             tv_kategori.text = it.nameCategory
+            idCategory = it.id.toInt()
 
             mapPresenter.getLokasiByCategoryAndRadius(
                 context = ctx,
@@ -157,20 +164,27 @@ class MapFragment : Fragment(), OnMapReadyCallback, MapView {
                     isCancelable = false
                     title = getString(R.string.lokasi_tidak_aktif)
                     message = getString(R.string.perangkat_belum_terdeteksi_lokasi_aktif)
-                    okButton {
+                    negativeButton(R.string.tutup) {
                         it.dismiss()
+                    }
+                    positiveButton(getString(R.string.aktifkan)) {
+                        Permissions.check(context, permissions, null, null, object : PermissionHandler() {
+                            override fun onGranted() {
+                                displayLocationSettingRequest(context as Context)
+                            }
+                        })
                     }
                 }.show()
             }
         } else {
             alert {
+                isCancelable = false
                 title = getString(R.string.akses_ditolak)
                 message = getString(R.string.diperlukan_izin_lokasi)
                 negativeButton(R.string.tutup) {
                     it.dismiss()
                 }
                 positiveButton(getString(R.string.izinkan)) {
-
                     Permissions.check(context, permissions, null, null, object : PermissionHandler() {
                         override fun onGranted() {
                             setCurrentLocation()
@@ -222,7 +236,7 @@ class MapFragment : Fragment(), OnMapReadyCallback, MapView {
         myPos = LatLng(lat, lng)
         mMap.clear()
         mMap.uiSettings.isMyLocationButtonEnabled = false
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(myPos, 15f))
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(myPos, 14.5f))
         mMap.addCircle(CircleOptions()
             .center(myPos)
             .radius(radius.toDouble())
@@ -297,9 +311,9 @@ class MapFragment : Fragment(), OnMapReadyCallback, MapView {
         kategoriMarkerData.clear()
         kategoriMarkerData.addAll(data)
         kategoriMarkerAdapter.notifyDataSetChanged()
-        tv_kategori.text = kategoriMarkerData[2].nameCategory
+        tv_kategori.text = kategoriMarkerData[0].nameCategory
 
-        idCategory = kategoriMarkerData[2].id.toInt()
+        idCategory = kategoriMarkerData[0].id.toInt()
 
         setCurrentLocation()
     }

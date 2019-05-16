@@ -94,4 +94,5 @@
     <string name="lokasi_tidak_aktif">Lokasi Tidak Aktif</string>
     <string name="perangkat_belum_terdeteksi_lokasi_aktif">Perangkat anda terdeteksi belum mengaktifkan lokasi</string>
     <string name="hapus_berhasil">Hapus Berhasil</string>
+    <string name="aktifkan">Aktifkan</string>
 </resources>
